@@ -20,19 +20,19 @@ git_sha = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decod
 githash = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
 os.chdir(cwd)
 
-rawDataFolder = '/das/home/fische_r/SLCO2ELY/Data10/disk1'
+rawDataFolder = '/das/home/fische_r/SLSCOELY'
 baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
 proc_stage = '00_raw'
 
 #TODO: create an extra datafile, for now one entry for the test samples
-crop_dict = {'T_3III_scan_05': {'crops': [801, 801+867, 51, 51+849, 0, -1]}} 
+crop_dict = {'T_3III_scan_05': {'crops': [801, 801+867, 51, 51+849, 0, 2016]}} 
 
 def get_scan_timestamps(sample, rawDataFolder, n0=1000):
     print(sample)
     sample_id = sample
-    # metapath = os.path.join(baseFolder, sample_id, ''.join([sample_id,'_config.json'])) #old filename for interlaces
-    metapath = os.path.join(baseFolder, sample_id, ''.join([sample_id,'.json'])) #"new" naming for COELY
-    datapath = os.path.join(baseFolder, sample_id, ''.join([sample_id,'.h5']))
+    # metapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'_config.json'])) #old filename for interlaces
+    metapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'.json'])) #"new" naming for COELY
+    datapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'.h5']))
     
     if  os.path.exists(metapath):
         metadata = json.load(open(metapath,'r'))
@@ -79,13 +79,13 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     
     sample_id = sample #TODO same sample_id for all scan_0X
     croplist = cropdict[sample_id]['crops']
-    locref = cropdict[sample_id]['reference location']
+    #  locref = cropdict[sample_id]['reference location']
     locref = [0,0,0]
     
     time, t0 = get_scan_timestamps(sample, rawDataFolder)
     timestamps = time+t0
-    
-    newdim = list(croplist)+[len(timestamps)]
+    a,b,c,d,e,f = croplist
+    newdim = [b-a, d-c, f-e] +[len(timestamps)]
     newStack = np.zeros(newdim, dtype=np.uint16)
     
     sampleFolder = os.path.join(baseFolder, sample, proc_stage)
