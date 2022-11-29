@@ -20,11 +20,12 @@ git_sha = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decod
 githash = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
 os.chdir(cwd)
 
-rawDataFolder = ''
-baseFolder = ''
+rawDataFolder = '/das/home/fische_r/SLCO2ELY/Data10/disk1'
+baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
 proc_stage = '00_raw'
 
-crop_dict = {} #TODO: create an extra datafile
+#TODO: create an extra datafile, for now one entry for the test samples
+crop_dict = {'T_3III_scan_05': [801, 801+867, 51, 51+849, 0, -1]} 
 
 def get_scan_timestamps(sample, rawDataFolder, n0=1000):
     print(sample)
@@ -79,6 +80,7 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     sample_id = sample #TODO same sample_id for all scan_0X
     croplist = cropdict[sample_id]['crops']
     locref = cropdict[sample_id]['reference location']
+    locref = [0,0,0]
     
     time, t0 = get_scan_timestamps(sample, rawDataFolder)
     timestamps = time+t0
@@ -98,8 +100,8 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     
     px = 2.75e-6 #m
     # vx = px**3
-    #TODO: common reference, i.e. edge of first channel
-    # maybe after registration if applicable
+    #TODO: common reference, i.e. edge of first channel, also rotate sample images
+    # reference maybe after registration if applicable
     x = np.arange(newdim[0]) - locref[0]
     y = np.arange(newdim[1]) - locref[1]
     z = np.arange(newdim[2]) - locref[2]
