@@ -115,7 +115,7 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                        'time': ('t_utc', time),
                        'x_m': ('x', x_metric),
                        'y_m': ('y', y_metric),
-                       'z_m': ('x', z_metric),
+                       'z_m': ('z', z_metric),
                        'filenames': (['z','t_utc'], stepnames)
                        },
                       coords = {
