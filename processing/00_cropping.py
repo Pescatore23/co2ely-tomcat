@@ -4,24 +4,29 @@ Created on Mon Nov 28 14:58:37 2022
 
 @author: fische_r
 """
-
 import xarray as xr
 import robpylib
-
-baseFolder = ''
-
 import h5py
 import os
 import numpy as np
 import json
+import subprocess
 
+# TODO maybe include fetching git version in robpylib
+scriptpath = os.path.dirname(__file__)
+cwd = os.getcwd()
+os.chdir(scriptpath)
+git_sha = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode().strip()
+githash = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
+os.chdir(cwd)
+
+rawDataFolder = ''
+baseFolder = ''
 proc_stage = '00_raw'
 
 crop_dict = {} #TODO: create an extra datafile
 
-gitsha = '' #TODO fetch git sha of processing code version
-
-def get_scan_timestamps(sample, baseFolder, n0=1000):
+def get_scan_timestamps(sample, rawDataFolder, n0=1000):
     print(sample)
     sample_id = sample
     # metapath = os.path.join(baseFolder, sample_id, ''.join([sample_id,'_config.json'])) #old filename for interlaces
@@ -59,13 +64,14 @@ def crop_stack(Stack, a,b,c,d,e,f):
     return Stack
 
 def load_and_crop_time_step(sampleFolder, stepFolder, croplist):
+    # loads reconstruction stack entirely in RAM (roughly 16GB), dask could work around, but not worth the effort
     Stack, names = robpylib.CommonFunctions.ImportExport.ReadStackNew(os.path.join(sampleFolder,stepFolder))
     Stack = crop_stack(Stack, *croplist)
     return Stack, names
     
 
 
-def create_h5(sample, baseFolder, cropdict):
+def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     
     # TODO: put pre-operando scans in add. xarray Dataarrays within Dataset  
     # TODO: add EC-lab data and gas cues to unified datafile, maybe better smaller extra file depending on size of image data
@@ -74,7 +80,7 @@ def create_h5(sample, baseFolder, cropdict):
     croplist = cropdict[sample_id]['crops']
     locref = cropdict[sample_id]['reference location']
     
-    time, t0 = get_scan_timestamps(sample, baseFolder)
+    time, t0 = get_scan_timestamps(sample, rawDataFolder)
     timestamps = time+t0
     
     newdim = list(croplist)+[len(timestamps)]
@@ -120,7 +126,8 @@ def create_h5(sample, baseFolder, cropdict):
                                'voxel': px,
                                'crop coordinates': croplist,
                                'reference coordinates': locref, #TBD
-                               'git_sha': gitsha
+                               'git_sha': git_sha,
+                               'githash': githash
                                }
                       )
     return data
