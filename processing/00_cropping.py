@@ -25,7 +25,7 @@ baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
 proc_stage = '00_raw'
 
 #TODO: create an extra datafile, for now one entry for the test samples
-crop_dict = {'T_3III_scan_05': {'crops': [801, 801+867, 51, 51+849, 0, 2016]}} 
+crop_dict = {'T_3III_scan_04': {'crops': [801, 801+867, 51, 51+849, 0, 2016]}} 
 
 def get_scan_timestamps(sample, rawDataFolder, n0=1000):
     print(sample)
