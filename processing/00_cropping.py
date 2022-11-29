@@ -90,6 +90,7 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     
     sampleFolder = os.path.join(baseFolder, sample, proc_stage)
     steps = os.listdir(sampleFolder)
+    steps.sort()
     stepnames = []
     
     for (stepFolder,i) in zip(steps, range(newdim[-1])):
