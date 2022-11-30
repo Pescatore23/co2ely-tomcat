@@ -25,9 +25,12 @@ baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
 proc_stage = '00_raw'
 
 #TODO: create an extra datafile, for now one entry for the test samples
-crop_dict = {'T_3III_scan_04': {'crops': [801, 801+867, 51, 51+849, 0, 2016]}} 
+cropdict = {'T_3III_scan_04': {'crops': [801, 801+867, 51, 51+849, 0, 2016]}} 
 
-def get_scan_timestamps(sample, rawDataFolder, n0=1000):
+sample = 'T_3III_scan_04'
+testpath = os.path.join(baseFolder, ''.join([sample,'_test.nc']))
+
+def get_scan_timestamps(sample, rawDataFolder, n0=1000, offset_proj=25):
     print(sample)
     sample_id = sample
     # metapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'_config.json'])) #old filename for interlaces
@@ -38,10 +41,14 @@ def get_scan_timestamps(sample, rawDataFolder, n0=1000):
         metadata = json.load(open(metapath,'r'))
         # n = metadata['nimages']
         n = metadata['scientificMetadata']['scanParameters']['Number of projections'] #new json convention
+        n = n + offset_proj
+        scans = metadata['scientificMetadata']['scanParameters']['Number of scans']
         
     else:
         print('config file not found, hard coded n='+str(n0))
-        n = n0
+        n = n0 + offset_proj
+        scans = 0
+    print('Warning: cut-off image offset hard-coded: '+str(offset_proj))
 
     if not os.path.exists(datapath):
         print('h5 file not found')
@@ -49,6 +56,10 @@ def get_scan_timestamps(sample, rawDataFolder, n0=1000):
     else:
         datafile = h5py.File(datapath, 'r')
         data = datafile['measurement']['instrument']['acquisition']['data']
+        
+        if not scans*n == datafile['exchange']['data'].shape[0]:
+            'Warning: multiple of scans and projection number do not match'
+        
         data = np.array(data)
         time_stamps = np.zeros(data.size)
         datafile.close()
@@ -56,8 +67,10 @@ def get_scan_timestamps(sample, rawDataFolder, n0=1000):
         for i in range(data.size):
             time_stamps[i] = data[i][-2]
             t0 = data[i][-3]
-            
-        return time_stamps[::n]/1e7, t0
+        time_stamps = time_stamps[::n]/1e7 #look at the time stamp of every 1000st projection
+        
+        
+        return time_stamps, t0
 
 
 def crop_stack(Stack, a,b,c,d,e,f):
@@ -138,7 +151,8 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                       )
     return data
     
-    # TODO rest
+data = create_h5(sample, baseFolder, rawDataFolder, cropdict)
+data.to_netcdf(testpath)
         
     
     

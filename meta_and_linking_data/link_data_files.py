@@ -92,7 +92,7 @@ for sample in sample_names:
 # TODO: start and end of each sample
 
 
-file_dict['samples']['3']['predamage scan'] = 'T_1_scan_02'
+file_dict['samples']['3']['predamage scan'] = 'T_2_scan_02'
 file_dict['samples']['3']['postdamage scan'] = 'T_2_scan_03'
 
 
@@ -104,8 +104,8 @@ cell = '4'
 file_dict['samples'][cell]['no_gas_no_water'] = 'n.a.'
 file_dict['samples'][cell]['gas_no_water'] = 'n.a.'
 file_dict['samples'][cell]['gas_water'] = 'T_4_scan_01'
-
 file_dict['samples'][cell]['operando'] = ['T_4_scan_02', 'T_4_scan_03']
+file_dict['samples'][cell]['main EC condition'] = 'galv. stat. 3mA'
 
 #cell 5, initially 3mA then ramping up to 20mA
 cell = '5'
@@ -113,6 +113,7 @@ file_dict['samples'][cell]['no_gas_no_water'] = 'T_5_scan_02'
 file_dict['samples'][cell]['gas_no_water'] = 'T_5_scan_03'
 file_dict['samples'][cell]['gas_water'] = 'T_5_scan_04'
 file_dict['samples'][cell]['operando'] = ['T_5_scan_05','T_5_scan_06', 'T_5_scan_07']
+file_dict['samples'][cell]['main EC condition'] = 'galv. stat. initially 3mA, ramped up to 20mA'
 
 #cell 6 constant current 5 mA
 cell = '6'
@@ -120,6 +121,7 @@ file_dict['samples'][cell]['no_gas_no_water'] = 'T_6_scan_01'
 file_dict['samples'][cell]['gas_no_water'] = 'T_6_scan_02'
 file_dict['samples'][cell]['gas_water'] = 'T_6_scan_03'
 file_dict['samples'][cell]['operando'] = ['T_6_scan_04', 'T_6_scan_05', 'T_6_scan_06']
+file_dict['samples'][cell]['main EC condition'] = 'galv. stat. 5mA'
 
 
 #cell 3II, constant potential 3.5V with 5min 3.9V after about 45min
@@ -128,6 +130,7 @@ file_dict['samples'][cell]['no_gas_no_water'] = 'T_3b_scan_02'
 file_dict['samples'][cell]['gas_no_water'] = 'T_3b_scan_03'
 file_dict['samples'][cell]['gas_water'] = 'T_3b_scan_04'
 file_dict['samples'][cell]['operando'] = ['T_3b_scan_05', 'T_3b_scan_06', 'T_3b_scan_07']
+file_dict['samples'][cell]['main EC condition'] = 'pot. stat. 3.5V'
 
 #cell 5II constant potential 3.5V
 cell = '5II'
@@ -136,6 +139,7 @@ file_dict['samples'][cell]['gas_no_water'] = 'T_5II_scan_02'
 file_dict['samples'][cell]['gas_water'] = 'T_5II_scan_03'
 file_dict['samples'][cell]['operando'] = ['T_5II_scan_04']
 file_dict['samples'][cell]['comment'] = 'flooded rotation stage and probably unreliable EC-measurements'
+file_dict['samples'][cell]['main EC condition'] = 'pot. stat. 3.5V'
 
 #cell 4II current ramp up, pot overflow at 20mA, added 2 more current values after
 cell = '4II'
@@ -144,6 +148,7 @@ file_dict['samples'][cell]['gas_no_water'] = 'T_4_scan_02'
 file_dict['samples'][cell]['gas_water'] = 'T_4_scan_03'
 file_dict['samples'][cell]['operando'] = ['T_4_scan_05']
 file_dict['samples'][cell]['comment'] = 'operando scan 4 cancelled within first minute to fix dangerously moving tubing'
+file_dict['samples'][cell]['main EC condition'] = 'current ramp up'
 
 #cell 8x IV curve ramping up current to 20mA
 cell = '8x'
@@ -152,6 +157,7 @@ file_dict['samples'][cell]['gas_no_water'] = 'T_8x_scan_02'
 file_dict['samples'][cell]['gas_water'] = 'T_8x_scan_03'
 file_dict['samples'][cell]['operando'] = ['T_8x_scan_04']
 file_dict['samples'][cell]['comment'] = 'pinched GDL'
+file_dict['samples'][cell]['main EC condition'] = 'current ramp up'
 
 #cell 3III constant potential 3V
 cell = '3III'
@@ -160,6 +166,7 @@ file_dict['samples'][cell]['gas_no_water'] = 'T_3III_scan_02'
 file_dict['samples'][cell]['gas_water'] = 'T_3III_scan_03'
 file_dict['samples'][cell]['operando'] = ['T_3III_scan_04', 'T_3III_scan_05']
 file_dict['samples'][cell]['comment'] = 'cathode flow field from former cell 6 due to capillaries ripped off'
+file_dict['samples'][cell]['main EC condition'] = 'pot. stat. 3V'
 
 
 #cell 7x constant current 5mA
@@ -169,4 +176,5 @@ file_dict['samples'][cell]['gas_no_water'] = 'T_7x_scan_02'
 file_dict['samples'][cell]['gas_water'] = 'T_7x_scan_03'
 file_dict['samples'][cell]['operando'] = ['T_7x_scan_04']
 file_dict['samples'][cell]['comment'] = 'pinched GDL, gas flow at 10ml/min'
+file_dict['samples'][cell]['main EC condition'] = 'galv. stat. 5mA'
       
