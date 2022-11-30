@@ -151,8 +151,8 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                       )
     return data
     
-data = create_h5(sample, baseFolder, rawDataFolder, cropdict)
-data.to_netcdf(testpath)
+# data = create_h5(sample, baseFolder, rawDataFolder, cropdict)
+# data.to_netcdf(testpath)
         
     
     
