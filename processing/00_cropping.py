@@ -94,10 +94,12 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     stepnames = []
     
     # TODO: count time steps and print, set track in read off
-    for (stepFolder,i) in zip(steps, range(newdim[-1])):
+    i = 0
+    for stepFolder in steps:
         Stack, names = load_and_crop_time_step(sampleFolder, stepFolder, croplist)
         newStack[...,i] = Stack
         stepnames.append(names)
+        i = i+1
     stepnames = np.array(stepnames)
     
     px = 2.75e-6 #m
