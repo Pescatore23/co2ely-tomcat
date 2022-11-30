@@ -6,7 +6,8 @@ Created on Wed Nov  2 15:42:38 2022
 """
 
 import os
-import h5py
+# import h5py
+import json
 
 EC_folder = r"U:\07_X_ray\005_TOMCAT_2022\02_EC_lab_files"
 gas_cue_folder = r"U:\07_X_ray\005_TOMCAT_2022\01_gas_cues"
@@ -20,7 +21,7 @@ def extract_sample_names():
         if not name in sample_names:
             sample_names.append(name)
     if 'galv' in sample_names:
-        sample_names.remove('galv')
+        sample_names.remove('galv') #this is an unsed mps file
     return sample_names
 
 
@@ -41,10 +42,13 @@ def extract_gas_cue(path):
     return cuenum, timestamp, comment
 
 def read_gas_cues(gas_cue_folder):
+    # TODO: add header for the columns
     cues = []
     timestamps = []
     comments = []
-    for file in os.listdir(gas_cue_folder):
+    gasfiles = os.listdir(gas_cue_folder)
+    # TODO: sort numerically
+    for file in gasfiles:
         path = os.path.join(gas_cue_folder, file)
         cuenum, timestamp, comment = extract_gas_cue(path)
         cues.append(cuenum)
@@ -57,10 +61,11 @@ def read_gas_cues(gas_cue_folder):
 sample_names = extract_sample_names()
 
 file_dict = {}
-file_dict['cues']  = read_gas_cues(gas_cue_folder)
+cues, timestamps, comments = read_gas_cues(gas_cue_folder)
+file_dict['cues'] = {'cue #': cues, 'timestamp': timestamps, 'comment': comments}
 file_dict['EC_folder'] = EC_folder
 file_dict['samples'] = {}
-file_dict['test_samples'] = {'1': 'testing setup and without echem, e.g. operando with gas (see logbook)','2': 'tests, unfortunately gas not connected', '3': 'beam damage tests'}
+file_dict['test_samples'] = {'1': {'comment': 'testing setup and without echem, e.g. operando with gas (see logbook)'},'2': {'comment': 'tests, unfortunately gas not connected'}, '3': {'comment': 'beam damage tests'}}
 
 for sample in sample_names:
     if sample == '2': continue
@@ -177,4 +182,23 @@ file_dict['samples'][cell]['gas_water'] = 'T_7x_scan_03'
 file_dict['samples'][cell]['operando'] = ['T_7x_scan_04']
 file_dict['samples'][cell]['comment'] = 'pinched GDL, gas flow at 10ml/min'
 file_dict['samples'][cell]['main EC condition'] = 'galv. stat. 5mA'
+
+cell = '1'
+file_dict['test_samples'][cell]['test 1'] = 'T_1_scan_01'
+file_dict['test_samples'][cell]['test 2'] = 'T_1_scan_02'
+file_dict['test_samples'][cell]['dry reference'] = 'T_1_scan_03'
+file_dict['test_samples'][cell]['dynamic scan running water'] = 'T_1_scan_04'
+file_dict['test_samples'][cell]['dynamic scan gas+water'] = 'T_1_scan_05'
+
+cell = '3'
+file_dict['test_samples'][cell]['pre-damage'] = 'T_3_scan_02'
+file_dict['test_samples'][cell]['post-damage'] = 'T_3_scan_03'
+
+# TODO: write to file, e.g. json or use pandas
+
+
+# create json file
+jsonpath = r"C:\Users\fische_r\Desktop\test.json"
+with open(jsonpath, "w") as outfile:
+    json.dump(file_dict, outfile,indent = 4)
       
