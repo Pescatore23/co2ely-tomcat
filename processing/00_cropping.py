@@ -93,11 +93,12 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     steps.sort()
     stepnames = []
     
+    # TODO: count time steps and print, set track in read off
     for (stepFolder,i) in zip(steps, range(newdim[-1])):
         Stack, names = load_and_crop_time_step(sampleFolder, stepFolder, croplist)
         newStack[...,i] = Stack
         stepnames.append(names)
-    # TODO: convert stepnemase to 2D array for xarray dataset
+    stepnames = np.array(stepnames)
     
     px = 2.75e-6 #m
     # vx = px**3
@@ -116,7 +117,7 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                        'x_m': ('x', x_metric),
                        'y_m': ('y', y_metric),
                        'z_m': ('z', z_metric),
-                       'filenames': (['z','t_utc'], stepnames)
+                       'filenames': (['t_utc','z'], stepnames)
                        },
                       coords = {
                           't_utc': timestamps,
