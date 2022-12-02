@@ -127,7 +127,39 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     y_metric = y*px
     z_metric = z*px
     
-    data = xr.Dataset({'image_data': (['x','y','z','t_utc'], newStack),
+    # data = xr.Dataset({'image_data': (['x','y','z','t_utc'], newStack),
+    #                    'time': ('t_utc', time),
+    #                    'x_m': ('x', x_metric),
+    #                    'y_m': ('y', y_metric),
+    #                    'z_m': ('z', z_metric),
+    #                    'filenames': (['t_utc','z'], stepnames)
+    #                    },
+    #                   coords = {
+    #                       't_utc': timestamps,
+    #                       'x': x,
+    #                       'y': y,
+    #                       'z': z
+    #                       },
+    #                   attrs = {'name': sample_id,
+    #                            'voxel size': '2.75 um',
+    #                            'voxel': px,
+    #                            'crop coordinates [a:b,c:d,e:f]': croplist,
+    #                            'cropping:' 
+    #                            'reference coordinates': locref, #TBD
+    #                            'git_sha': git_sha,
+    #                            'githash': githash
+    #                            }
+    #                   )
+    
+    data2 = xr.Dataset({'image_data_0': (['x','y','z'], newStack[...,0]),
+                        'image_data_1': (['x','y','z'], newStack[...,1]),
+                        'image_data_2': (['x','y','z'], newStack[...,2]),
+                        'image_data_3': (['x','y','z'], newStack[...,3]),
+                        'image_data_4': (['x','y','z'], newStack[...,4]),
+                        'image_data_5': (['x','y','z'], newStack[...,5]),
+                        'image_data_6': (['x','y','z'], newStack[...,6]),
+                        'image_data_7': (['x','y','z'], newStack[...,7]),
+                        'image_data_8': (['x','y','z'], newStack[...,8]),
                        'time': ('t_utc', time),
                        'x_m': ('x', x_metric),
                        'y_m': ('y', y_metric),
@@ -143,20 +175,22 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                       attrs = {'name': sample_id,
                                'voxel size': '2.75 um',
                                'voxel': px,
-                               'crop coordinates': croplist,
+                               'crop coordinates [a:b,c:d,e:f]': croplist,
+                               'cropping:' 
                                'reference coordinates': locref, #TBD
                                'git_sha': git_sha,
                                'githash': githash
                                }
                       )
-    return data
+    
+    return data2
 
 def run():
     data = create_h5(sample, baseFolder, rawDataFolder, cropdict)
     data.to_netcdf(testpath)
     
     
-# run()
+run()
         
     
     
