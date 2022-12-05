@@ -35,7 +35,7 @@ cropdata = xr.load_dataset(croppath)
 cropdata = cropdata['cropdict']
 
 
-sample = 'T_3III_scan_04'
+sample = 'T_8x_scan_04'
 
 
 # TODO: find a way to use parser with job submission,e.g. check h5_reconstruct.py
