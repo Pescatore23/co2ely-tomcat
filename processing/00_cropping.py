@@ -32,15 +32,17 @@ if not os.path.exists(destination):
 #TODO: create an extra datafile, for now one entry for the test samples
 cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
 
-# sample = 'T_3III_scan_04'
-
-parser = argparse.ArgumentParser(description = 'Simulation parameters')
-
-parser.add_argument('-s', '--sample', type = str, default = None, help = 'The name of the sample, same as the corresponding TOMCAT folder')
-args = parser.parse_args()
+sample = 'T_3III_scan_04'
 
 
-sample = args.sample
+# TODO: find a way to use parser with job submission,e.g. check h5_reconstruct.py
+# parser = argparse.ArgumentParser(description = 'Simulation parameters')
+
+# parser.add_argument('-s', '--sample', type = str, default = None, help = 'The name of the sample, same as the corresponding TOMCAT folder')
+# args = parser.parse_args()
+
+
+# sample = args.sample
 # testpath = os.path.join(baseFolder, ''.join([sample,'_test.nc']))
 dest1 = os.path.join(destination, ''.join(['00_',sample,'_cropped_4D.nc']))
 dest2 = os.path.join(destination, ''.join(['00_',sample,'_cropped_3Dp1D.nc']))
