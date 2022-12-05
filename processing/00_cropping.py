@@ -31,7 +31,7 @@ destination = '/das/home/fische_r/DASCOELY/processing'
 # cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
 
 croppath = '/das/home/fische_r/DASCOELY/processing/cropping.nc'
-cropdata = xr.load_dataset(croppath)['cropdict']
+cropdata = xr.load_dataset(croppath)
 cropdata = cropdata['cropdict']
 
 
