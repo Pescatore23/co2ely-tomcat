@@ -12,6 +12,8 @@ import numpy as np
 import json
 import subprocess
 
+import argparse
+
 # TODO maybe include fetching git version in robpylib
 scriptpath = os.path.dirname(__file__)
 cwd = os.getcwd()
@@ -23,12 +25,26 @@ os.chdir(cwd)
 rawDataFolder = '/das/home/fische_r/SLSCOELY'
 baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
 proc_stage = '00_raw'
+destination = '/das/home/fische_r/DASCOELY/processing'
+if not os.path.exists(destination):
+    os.mkdir(destination)
 
 #TODO: create an extra datafile, for now one entry for the test samples
-cropdict = {'T_3III_scan_04': {'crops': [801, 801+867, 51, 51+849, 0, 2016]}} 
+cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
 
-sample = 'T_3III_scan_04'
-testpath = os.path.join(baseFolder, ''.join([sample,'_test.nc']))
+# sample = 'T_3III_scan_04'
+
+parser = argparse.ArgumentParser(description = 'Simulation parameters')
+
+parser.add_argument('-s', '--sample', type = str, default = None, help = 'The name of the sample, same as the corresponding TOMCAT folder')
+args = parser.parse_args()
+
+
+sample = args.sample
+# testpath = os.path.join(baseFolder, ''.join([sample,'_test.nc']))
+dest1 = os.path.join(destination, ''.join(['00_',sample,'_cropped_4D.nc']))
+dest2 = os.path.join(destination, ''.join(['00_',sample,'_cropped_3Dp1D.nc']))
+
 
 def get_scan_timestamps(sample, rawDataFolder, n0=1000, offset_proj=25):
     print(sample)
@@ -67,7 +83,7 @@ def get_scan_timestamps(sample, rawDataFolder, n0=1000, offset_proj=25):
         for i in range(data.size):
             time_stamps[i] = data[i][-2]
             t0 = data[i][-3]
-        time_stamps = time_stamps[::n]/1e7 #look at the time stamp of every 1000st projection
+        time_stamps = time_stamps[::n]/1e7 #look at the time stamp of every nth projection
         
         
         return time_stamps, t0
@@ -79,7 +95,7 @@ def crop_stack(Stack, a,b,c,d,e,f):
 
 def load_and_crop_time_step(sampleFolder, stepFolder, croplist):
     # loads reconstruction stack entirely in RAM (roughly 16GB), dask could work around, but not worth the effort
-    Stack, names = robpylib.CommonFunctions.ImportExport.ReadStackNew(os.path.join(sampleFolder,stepFolder))
+    Stack, names = robpylib.CommonFunctions.ImportExport.ReadStackNew(os.path.join(sampleFolder,stepFolder), track=False)
     Stack = crop_stack(Stack, *croplist)
     return Stack, names
     
@@ -87,13 +103,13 @@ def load_and_crop_time_step(sampleFolder, stepFolder, croplist):
 
 def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     
-    # TODO: put pre-operando scans in add. xarray Dataarrays within Dataset  
-    # TODO: add EC-lab data and gas cues to unified datafile, maybe better smaller extra file depending on size of image data
+    # TODO: put pre-operando scans in add. xarray Dataarrays within Dataset, maybe not, easier to have a database that links the files
+    # TODO: add EC-lab data and gas cues to unified datafile, maybe better smaller extra file depending on size of image data; same as above
     
     sample_id = sample #TODO same sample_id for all scan_0X
     croplist = cropdict[sample_id]['crops']
     #  locref = cropdict[sample_id]['reference location']
-    locref = [0,0,0]
+    # locref = [0,0,0]
     
     time, t0 = get_scan_timestamps(sample, rawDataFolder)
     timestamps = time+t0
@@ -106,9 +122,11 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     steps.sort()
     stepnames = []
     
-    # TODO: count time steps and print, set track in read off
+
     i = 0
+    total_i = len(steps)
     for stepFolder in steps:
+        print('time step '+str(i)+'I'+str(total_i))
         Stack, names = load_and_crop_time_step(sampleFolder, stepFolder, croplist)
         newStack[...,i] = Stack
         stepnames.append(names)
@@ -119,9 +137,9 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     # vx = px**3
     #TODO: common reference, i.e. edge of first channel, also rotate sample images
     # reference maybe after registration if applicable
-    x = np.arange(newdim[0]) - locref[0]
-    y = np.arange(newdim[1]) - locref[1]
-    z = np.arange(newdim[2]) - locref[2]
+    x = np.arange(newdim[0])# - locref[0]
+    y = np.arange(newdim[1])# - locref[1]
+    z = np.arange(newdim[2])# - locref[2]
     
     x_metric = x*px
     y_metric = y*px
@@ -145,12 +163,13 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                                 'voxel': px,
                                 'crop coordinates [a:b,c:d,e:f]': croplist,
                                 'cropping:' 
-                                'reference coordinates': locref, #TBD
+                                # 'reference coordinates': locref, #TBD
                                 'git_sha': git_sha,
                                 'githash': githash
                                 }
                       )
-    # TODO: automatically create data2 as workaround for iamgeJ bug
+
+# create dataset with one time step as data reference
     data2 = xr.Dataset({'image_data_00': (['x','y','z'], newStack[...,0]),
     #                     'image_data_1': (['x','y','z'], newStack[...,1]),
                         'time': ('t_utc', time),
@@ -170,24 +189,27 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                                 'voxel': px,
                                 'crop coordinates [a:b,c:d,e:f]': croplist,
                                 'cropping:' 
-                                'reference coordinates': locref, #TBD
-                                'git_sha': git_sha,
-                                'githash': githash
+                                # 'reference coordinates': locref, #TBD
+                                'git_sha_00_cropping': git_sha,
+                                'githash_00_cropping': githash
                                 }
                       )
-    # for i in range(1,newStack.shape[-1]):
-    for i in range(1,2):
+    # add the remaining datarrays for each timestep
+    for i in range(1,newStack.shape[-1]):
         key = 'image_data_'+ f'{i:02d}'
         data2[key] = (['x','y','z'], newStack[...,i])
     
-    return data2
+    return data, data2
 
 def run():
-    data = create_h5(sample, baseFolder, rawDataFolder, cropdict)
-    data.to_netcdf(testpath)
+    data, data2 = create_h5(sample, baseFolder, rawDataFolder, cropdict)
+    data.to_netcdf(dest1)
+    data2.to_netcdf(dest2)
     
-    
-run()
+if not sample is None:  
+    run()
+else:
+    'no sample name given'
         
     
     
