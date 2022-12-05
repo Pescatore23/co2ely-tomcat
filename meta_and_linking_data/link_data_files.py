@@ -96,11 +96,6 @@ for sample in sample_names:
         
 # TODO: start and end of each sample
 
-
-file_dict['samples']['3']['predamage scan'] = 'T_2_scan_02'
-file_dict['samples']['3']['postdamage scan'] = 'T_2_scan_03'
-
-
 # usually (all?) 5min 2V + 5min 2.5V as conditioning
 
 # cell 4, 3mA constant current
@@ -184,21 +179,22 @@ file_dict['samples'][cell]['comment'] = 'pinched GDL, gas flow at 10ml/min'
 file_dict['samples'][cell]['main EC condition'] = 'galv. stat. 5mA'
 
 cell = '1'
-file_dict['test_samples'][cell]['test 1'] = 'T_1_scan_01'
-file_dict['test_samples'][cell]['test 2'] = 'T_1_scan_02'
-file_dict['test_samples'][cell]['dry reference'] = 'T_1_scan_03'
-file_dict['test_samples'][cell]['dynamic scan running water'] = 'T_1_scan_04'
-file_dict['test_samples'][cell]['dynamic scan gas+water'] = 'T_1_scan_05'
+file_dict['samples'][cell] = {}
+file_dict['samples'][cell]['test 1'] = 'T_1_scan_01'
+file_dict['samples'][cell]['test 2'] = 'T_1_scan_02'
+file_dict['samples'][cell]['dry reference'] = 'T_1_scan_03'
+file_dict['samples'][cell]['dynamic scan running water'] = 'T_1_scan_04'
+file_dict['samples'][cell]['dynamic scan gas+water'] = 'T_1_scan_05'
+file_dict['samples'][cell]['comment'] = 'test sample: beam setup and water transport without electrochemistry'
 
 cell = '3'
-file_dict['test_samples'][cell]['pre-damage'] = 'T_3_scan_02'
-file_dict['test_samples'][cell]['post-damage'] = 'T_3_scan_03'
-
-# TODO: write to file, e.g. json or use pandas
-
+file_dict['samples'][cell] = {}
+file_dict['samples'][cell]['pre-damage'] = 'T_3_scan_02'
+file_dict['samples'][cell]['post-damage'] = 'T_3_scan_03'
+file_dict['samples'][cell]['comment'] = 'test sample: beam damage tests. Series of 10 s exposures (7) + 1 60s exposure + 10 s before seeing decrease of EC-performance'
 
 # create json file
-jsonpath = r"C:\Users\fische_r\Desktop\test.json"
+jsonpath = r"C:\git_repos\01_Python\co2ely-tomcat\meta_and_linking_data\data_overview.json"
 with open(jsonpath, "w") as outfile:
     json.dump(file_dict, outfile,indent = 4)
       

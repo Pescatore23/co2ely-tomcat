@@ -12,7 +12,7 @@ import numpy as np
 import json
 import subprocess
 
-# import argparse
+import argparse
 
 # TODO maybe include fetching git version in robpylib
 scriptpath = os.path.dirname(__file__)
@@ -39,13 +39,13 @@ sample = 'T_3III_scan_04'
 
 
 # TODO: find a way to use parser with job submission,e.g. check h5_reconstruct.py
-# parser = argparse.ArgumentParser(description = 'Simulation parameters')
+parser = argparse.ArgumentParser()
 
-# parser.add_argument('-s', '--sample', type = str, default = None, help = 'The name of the sample, same as the corresponding TOMCAT folder')
-# args = parser.parse_args()
+parser.add_argument('-s', '--sample', type = str, default = sample, help = 'The name of the sample, same as the corresponding TOMCAT folder')
+args = parser.parse_args()
 
+sample = args.sample
 
-# sample = args.sample
 # testpath = os.path.join(baseFolder, ''.join([sample,'_test.nc']))
 dest1 = os.path.join(destination, ''.join(['00_',sample,'_cropped_4D.nc']))
 dest2 = os.path.join(destination, ''.join(['00_',sample,'_cropped_3Dp1D.nc']))
