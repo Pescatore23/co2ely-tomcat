@@ -32,6 +32,7 @@ destination = '/das/home/fische_r/DASCOELY/processing'
 
 croppath = '/das/home/fische_r/DASCOELY/processing/cropping.nc'
 cropdata = xr.load_dataset(croppath)['cropdict']
+cropdata = cropdata['cropdict']
 
 
 sample = 'T_3III_scan_04'
