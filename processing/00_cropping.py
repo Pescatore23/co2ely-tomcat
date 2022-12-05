@@ -115,8 +115,8 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdata):
     if sample_id == '3b':
         sample_id = '3II'
     
-    croplist = cropdata.sel(sample = sample_id)
-    a, b, c, d, e, f = croplist.data
+    croplist = cropdata.sel(sample = sample_id).data
+    a, b, c, d, e, f = croplist
     
     time, t0 = get_scan_timestamps(sample, rawDataFolder)
     timestamps = time+t0
