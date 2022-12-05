@@ -12,7 +12,7 @@ import numpy as np
 import json
 import subprocess
 
-import argparse
+# import argparse
 
 # TODO maybe include fetching git version in robpylib
 scriptpath = os.path.dirname(__file__)
@@ -26,11 +26,13 @@ rawDataFolder = '/das/home/fische_r/SLSCOELY'
 baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
 proc_stage = '00_raw'
 destination = '/das/home/fische_r/DASCOELY/processing'
-if not os.path.exists(destination):
-    os.mkdir(destination)
 
 #TODO: create an extra datafile, for now one entry for the test samples
-cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
+# cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
+
+croppath = '/das/home/fische_r/DASCOELY/processing/cropping.nc'
+cropdata = xr.load_dataset(croppath)['cropdict']
+
 
 sample = 'T_3III_scan_04'
 
@@ -103,19 +105,21 @@ def load_and_crop_time_step(sampleFolder, stepFolder, croplist):
     
 
 
-def create_h5(sample, baseFolder, rawDataFolder, cropdict):
+def create_h5(sample, baseFolder, rawDataFolder, cropdata):
     
     # TODO: put pre-operando scans in add. xarray Dataarrays within Dataset, maybe not, easier to have a database that links the files
     # TODO: add EC-lab data and gas cues to unified datafile, maybe better smaller extra file depending on size of image data; same as above
     
-    sample_id = sample #TODO same sample_id for all scan_0X
-    croplist = cropdict[sample_id]['crops']
-    #  locref = cropdict[sample_id]['reference location']
-    # locref = [0,0,0]
+    sample_id = sample.split('_')[1]
+    if sample_id == '3b':
+        sample_id = '3II'
+    
+    croplist = cropdata.sel(sample_id)
+    a, b, c, d, e, f = croplist
     
     time, t0 = get_scan_timestamps(sample, rawDataFolder)
     timestamps = time+t0
-    a,b,c,d,e,f = croplist
+ 
     newdim = [b-a, d-c, f-e] +[len(timestamps)]
     newStack = np.zeros(newdim, dtype=np.uint16)
     
@@ -128,7 +132,7 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     i = 0
     total_i = len(steps)
     for stepFolder in steps:
-        print('time step '+str(i)+'I'+str(total_i))
+        print('time step '+str(i+1)+'/'+str(total_i))
         Stack, names = load_and_crop_time_step(sampleFolder, stepFolder, croplist)
         newStack[...,i] = Stack
         stepnames.append(names)
@@ -161,6 +165,8 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                           'z': z
                           },
                       attrs = {'name': sample_id,
+                               'foldername': sample,
+                               'scan_#': sample.split('_')[-1],
                                 'voxel size': '2.75 um',
                                 'voxel': px,
                                 'crop coordinates [a:b,c:d,e:f]': croplist,
@@ -186,16 +192,8 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
                           'y': y,
                           'z': z
                           },
-                      attrs = {'name': sample_id,
-                                'voxel size': '2.75 um',
-                                'voxel': px,
-                                'crop coordinates [a:b,c:d,e:f]': croplist,
-                                'cropping:' 
-                                # 'reference coordinates': locref, #TBD
-                                'git_sha_00_cropping': git_sha,
-                                'githash_00_cropping': githash
-                                }
                       )
+    data2.attrs = data.attrs
     # add the remaining datarrays for each timestep
     for i in range(1,newStack.shape[-1]):
         key = 'image_data_'+ f'{i:02d}'
@@ -204,7 +202,7 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdict):
     return data, data2
 
 def run():
-    data, data2 = create_h5(sample, baseFolder, rawDataFolder, cropdict)
+    data, data2 = create_h5(sample, baseFolder, rawDataFolder, cropdata)
     data.to_netcdf(dest1)
     data2.to_netcdf(dest2)
     
