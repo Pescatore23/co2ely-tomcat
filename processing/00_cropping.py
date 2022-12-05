@@ -88,7 +88,7 @@ def get_scan_timestamps(sample, rawDataFolder, n0=1000, offset_proj=25):
         data = datafile['measurement']['instrument']['acquisition']['data']
         
         if not scans*n == datafile['exchange']['data'].shape[0]:
-            'Warning: multiple of scans and projection number do not match'
+            print('Warning: multiple of scans and projection number do not match')
         
         data = np.array(data)
         time_stamps = np.zeros(data.size)
