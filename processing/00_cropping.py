@@ -13,6 +13,9 @@ import json
 import subprocess
 
 import argparse
+import socket
+
+host = socket.gethostname()
 
 # TODO maybe include fetching git version in robpylib
 scriptpath = os.path.dirname(__file__)
@@ -24,8 +27,14 @@ os.chdir(cwd)
 
 rawDataFolder = '/das/home/fische_r/SLSCOELY'
 baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
-proc_stage = '00_raw'
 destination = '/das/home/fische_r/DASCOELY/processing'
+
+if host == 'mpc2959.psi.ch':
+    rawDataFolder = '/mpc/homes/fische_r/NAS/DASCOELY/rawData'
+    baseFolder = '/mpc/homes/fische_r/NAS/DASCOELY/reconstructions'
+    destination = '/mpc/homes/fische_r/NAS/DASCOELY/processing'
+
+proc_stage = '00_raw'
 
 #TODO: create an extra datafile, for now one entry for the test samples
 # cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
