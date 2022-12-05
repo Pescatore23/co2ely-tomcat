@@ -28,18 +28,20 @@ os.chdir(cwd)
 rawDataFolder = '/das/home/fische_r/SLSCOELY'
 baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
 destination = '/das/home/fische_r/DASCOELY/processing'
+croppath = '/das/home/fische_r/DASCOELY/processing/cropping.nc'
 
 if host == 'mpc2959.psi.ch':
     rawDataFolder = '/mpc/homes/fische_r/NAS/DASCOELY/rawData'
     baseFolder = '/mpc/homes/fische_r/NAS/DASCOELY/reconstructions'
     destination = '/mpc/homes/fische_r/NAS/DASCOELY/processing'
+    croppath = '/mpc/homes/fische_r/NAS/DASCOELY/processing/cropping.nc'
 
 proc_stage = '00_raw'
 
 #TODO: create an extra datafile, for now one entry for the test samples
 # cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
 
-croppath = '/das/home/fische_r/DASCOELY/processing/cropping.nc'
+
 cropdata = xr.load_dataset(croppath)
 cropdata = cropdata['cropdict']
 
