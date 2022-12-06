@@ -8,6 +8,7 @@ Created on Wed Nov  2 15:42:38 2022
 import os
 # import h5py
 import json
+import eclabfiles as ecf
 
 EC_folder = r"U:\07_X_ray\005_TOMCAT_2022\02_EC_lab_files"
 gas_cue_folder = r"U:\07_X_ray\005_TOMCAT_2022\01_gas_cues"

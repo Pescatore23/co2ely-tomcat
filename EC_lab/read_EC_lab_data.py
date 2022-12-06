@@ -8,36 +8,41 @@ Created on Fri Oct  7 12:19:13 2022
 
 import eclabfiles as ecf
 import xarray as xr
-import os
-import scipy as sp
-import scipy.signal
-import matplotlib.pyplot as plt
+# import os
+# import scipy as sp
+# import scipy.signal
+# import matplotlib.pyplot as plt
 
-folder = r"U:\02_Electrolyser\006_testing\2022_10_05_variable_gas_flow"
-folder = r"U:\02_Electrolyser\006_testing\2022_10_26_cell012"
+# folder = r"U:\02_Electrolyser\006_testing\2022_10_05_variable_gas_flow"
+# folder = r"U:\02_Electrolyser\006_testing\2022_10_26_cell012"
 
 def mpr_to_xr(path):
     _, meta = ecf.process(path)
     
     df = ecf.to_df(path)
     
-    data = xr.Dataset(df)
+    if df.empty:
+        print('Warning: '+path+' is empty. None returned')
+        return None
     
-    variables = list(data.keys())
-    
-    for var in variables:
-        if var == 'uts':
-            data[var].attrs['unit'] = 's'    
-        else:
-            if var in meta['units'].keys():
-                data[var].attrs['unit'] = meta['units'][var]
-    data['dim_0'] = data['time']
-    if '<I>' in data.keys():
-        data = data.rename({'dim_0': 't', '<I>': 'I', '<Ewe>': '$E_{we}$', 'uts': 'timestamp (utc)'})   
     else:
-        data = data.rename({'dim_0': 't', 'Ewe': '$E_{we}$', 'uts': 'timestamp (utc)'})   
-    data.attrs['path'] = path
-    return data
+        data = xr.Dataset(df)
+        
+        variables = list(data.keys())
+        
+        for var in variables:
+            if var == 'uts':
+                data[var].attrs['unit'] = 's'    
+            else:
+                if var in meta['units'].keys():
+                    data[var].attrs['unit'] = meta['units'][var]
+        data['dim_0'] = data['time']
+        if '<I>' in data.keys():
+            data = data.rename({'dim_0': 't', '<I>': 'I', '<Ewe>': '$E_{we}$', 'uts': 'timestamp (utc)'})   
+        else:
+            data = data.rename({'dim_0': 't', 'Ewe': '$E_{we}$', 'uts': 'timestamp (utc)'})   
+        data.attrs['path'] = path
+        return data
 
 # files = []
 # big_data = []
