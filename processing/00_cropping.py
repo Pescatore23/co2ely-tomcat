@@ -47,6 +47,7 @@ cropdata = cropdata['cropdict']
 
 
 sample = 'T_6_scan_06'
+sample = None
 
 
 # TODO: find a way to use parser with job submission,e.g. check h5_reconstruct.py
