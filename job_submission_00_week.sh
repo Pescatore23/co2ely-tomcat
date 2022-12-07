@@ -20,4 +20,4 @@ conda activate base
 
 # Execute command in the container, ipython for debugging to avoid defaul python, change back to python eventually
 # srun python -u train_random.py $ARGS
-srun python -u ~/lib/co2ely-tomcat/processing/00_cropping.py
+srun python -u ~/lib/co2ely-tomcat/processing/00_cropping.py -s $1

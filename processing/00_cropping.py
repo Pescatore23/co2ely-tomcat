@@ -38,19 +38,12 @@ if host == 'mpc2959.psi.ch':
 
 proc_stage = '00_raw'
 
-#TODO: create an extra datafile, for now one entry for the test samples
-# cropdict = {'T_3III_scan_04': {'crops': [792, 792+834, 45, 45+856, 0, 2016]}} 
-
-
 cropdata = xr.load_dataset(croppath)
 cropdata = cropdata['cropdict']
 
-
-sample = 'T_6_scan_06'
 sample = None
 
-
-# TODO: find a way to use parser with job submission,e.g. check h5_reconstruct.py
+# TODO: find a way to use parser with job submission,e.g. check h5_reconstruct.py --> possibly solved
 parser = argparse.ArgumentParser()
 
 parser.add_argument('-s', '--sample', type = str, default = sample, help = 'The name of the sample, same as the corresponding TOMCAT folder')
@@ -58,21 +51,17 @@ args = parser.parse_args()
 
 sample = args.sample
 
-# testpath = os.path.join(baseFolder, ''.join([sample,'_test.nc']))
-
-
-
 def get_scan_timestamps(sample, rawDataFolder, n0=1000, offset_proj=25):
     print(sample)
     sample_id = sample
-    # metapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'_config.json'])) #old filename for interlaces
-    metapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'.json'])) #"new" naming for COELY
+    # metapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'_config.json'])) #old json convention of tomcat
+    metapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'.json'])) #new json convention of tomcat
     datapath = os.path.join(rawDataFolder, sample_id, ''.join([sample_id,'.h5']))
     
     if  os.path.exists(metapath):
         metadata = json.load(open(metapath,'r'))
-        # n = metadata['nimages']
-        n = metadata['scientificMetadata']['scanParameters']['Number of projections'] #new json convention
+        # n = metadata['nimages']  #old json convention of tomcat
+        n = metadata['scientificMetadata']['scanParameters']['Number of projections'] #new json convention of tomcat
         n = n + offset_proj
         scans = metadata['scientificMetadata']['scanParameters']['Number of scans']
         
@@ -121,6 +110,7 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdata):
     
     # TODO: put pre-operando scans in add. xarray Dataarrays within Dataset, maybe not, easier to have a database that links the files
     # TODO: add EC-lab data and gas cues to unified datafile, maybe better smaller extra file depending on size of image data; same as above
+    # solution is to have a database as json file that links all different data, ref. link_data_files.py
     
     sample_id = sample.split('_')[1]
     if sample_id == '3b':
