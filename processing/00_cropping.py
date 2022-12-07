@@ -59,8 +59,7 @@ args = parser.parse_args()
 sample = args.sample
 
 # testpath = os.path.join(baseFolder, ''.join([sample,'_test.nc']))
-dest1 = os.path.join(destination, ''.join(['00_',sample,'_cropped_4D.nc']))
-dest2 = os.path.join(destination, ''.join(['00_',sample,'_cropped_3Dp1D.nc']))
+
 
 
 def get_scan_timestamps(sample, rawDataFolder, n0=1000, offset_proj=25):
@@ -215,6 +214,9 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdata):
     return data, data2
 
 def run():
+    dest1 = os.path.join(destination, ''.join(['00_',sample,'_cropped_4D.nc']))
+    dest2 = os.path.join(destination, ''.join(['00_',sample,'_cropped_3Dp1D.nc']))
+    
     data, data2 = create_h5(sample, baseFolder, rawDataFolder, cropdata)
     data.to_netcdf(dest1)
     data2.to_netcdf(dest2)
