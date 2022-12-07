@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=recos_to_h5
+#SBATCH --job-name=$1recos_to_h5
 #SBATCH --time=4:00:00
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=4
@@ -20,4 +20,4 @@ conda activate base
 
 # Execute command in the container, ipython for debugging to avoid defaul python, change back to python eventually
 # srun python -u train_random.py $ARGS
-srun python -u ~/lib/co2ely-tomcat/processing/00_cropping.py
+srun python -u ~/lib/co2ely-tomcat/processing/00_cropping.py -s $1
