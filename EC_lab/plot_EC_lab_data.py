@@ -61,6 +61,25 @@ def plot_HFR_time_color(d, xl=(0,200), yl=(-50,50), cmap=cm.viridis, tl=None, un
     plt.ylim(yl[0],yl[1])
     plt.xlabel('Re(Z) [$\Omega$]')
     plt.ylabel('-Im(Z) [$\Omega$]')
+    
+def HFR_color_plot_to_axis(d,ax, xl=(0,200), yl=(-50,50), cmap=cm.viridis, tl=None, unit='min'):
+    # TDOD: allow, if necessary, multiple ec files
+    '''
+    plots the HFR for one dataset with color coding for time
+    '''
+    if unit == 'min':
+        tf = 60
+    if unit == 's':
+        tf = 1
+    if tl is None:
+        tl = (0,d['time'].max()/tf)
+    ax.scatter(d['Re(Z)'], d['-Im(Z)'], c=(d['time'])/tf, cmap = cmap, marker='.', vmin=tl[0], vmax=tl[1])
+    ax.colorbar(label='time ['+unit+']')
+    ax.axhline(0, color='k', linewidth=0.5)
+    ax.xlim(xl[0],xl[1])
+    ax.ylim(yl[0],yl[1])
+    ax.xlabel('Re(Z) [$\Omega$]')
+    ax.ylabel('-Im(Z) [$\Omega$]')
 
 # TODO: HFR time color for multiple datafiles
 
