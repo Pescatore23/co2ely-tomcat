@@ -10,6 +10,7 @@ import socket
 import os
 import matplotlib.pyplot as plt
 from matplotlib import cm
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 # import the function to read mpr data, might fail if cwd wrong !
 from read_EC_lab_data import mpr_to_xr
@@ -62,7 +63,7 @@ def plot_HFR_time_color(d, xl=(0,200), yl=(-50,50), cmap=cm.viridis, tl=None, un
     plt.xlabel('Re(Z) [$\Omega$]')
     plt.ylabel('-Im(Z) [$\Omega$]')
     
-def HFR_color_plot_to_axis(d,ax, xl=(0,200), yl=(-50,50), cmap=cm.viridis, tl=None, unit='min'):
+def HFR_color_plot_to_axis(d,ax,fig, xl=(0,200), yl=(-5,50), cmap=cm.viridis, tl=None, unit='min', marker='o', markersize=25):
     # TDOD: allow, if necessary, multiple ec files
     '''
     plots the HFR for one dataset with color coding for time
@@ -73,13 +74,18 @@ def HFR_color_plot_to_axis(d,ax, xl=(0,200), yl=(-50,50), cmap=cm.viridis, tl=No
         tf = 1
     if tl is None:
         tl = (0,d['time'].max()/tf)
-    ax.scatter(d['Re(Z)'], d['-Im(Z)'], c=(d['time'])/tf, cmap = cmap, marker='.', vmin=tl[0], vmax=tl[1])
-    ax.colorbar(label='time ['+unit+']')
+    im = ax.scatter(d['Re(Z)'], d['-Im(Z)'], c=(d['time'])/tf, cmap = cmap, marker=marker, s=markersize, vmin=tl[0], vmax=tl[1])
+    
     ax.axhline(0, color='k', linewidth=0.5)
-    ax.xlim(xl[0],xl[1])
-    ax.ylim(yl[0],yl[1])
-    ax.xlabel('Re(Z) [$\Omega$]')
-    ax.ylabel('-Im(Z) [$\Omega$]')
+    ax.set_xlim(xl[0],xl[1])
+    ax.set_ylim(yl[0],yl[1])
+    ax.set_xlabel('Re(Z) [$\Omega$]')
+    ax.set_ylabel('-Im(Z) [$\Omega$]')
+    
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes('right', size='5%', pad=0.05)
+    fig.colorbar(im, cax=cax, orientation='vertical', label='time ['+unit+']')
+    # ax.colorbar(label='time ['+unit+']')
 
 # TODO: HFR time color for multiple datafiles
 
