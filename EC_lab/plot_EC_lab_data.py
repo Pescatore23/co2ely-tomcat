@@ -20,12 +20,13 @@ metapath = None
 if host == 'PC14918':
     metapath = r"C:\git_repos\01_Python\co2ely-tomcat\meta_and_linking_data\data_overview.json"
     EC_path = r"U:\07_X_ray\005_TOMCAT_2022\02_EC_lab_files"
+    overview = json.load(open(metapath, 'r'))
     
-    
-overview = json.load(open(metapath, 'r'))
+   
+# overview = json.load(open(metapath, 'r'))
 
 
-def load_sample_data(sample, overview=overview, EC_path=EC_path):
+def load_sample_data(sample, overview, EC_path):
     
     EC_files = overview['samples'][sample]['ec_lab_files']
     EC_data_files = [file for file in EC_files if file[-3:]=='mpr'] #select only the data files
