@@ -214,7 +214,7 @@ def run():
 if not sample is None:  
     run()
 else:
-    'no sample name given'
+    print('no sample name given')
         
     
     
