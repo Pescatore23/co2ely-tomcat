@@ -260,14 +260,14 @@
         },
         "6": {
             "ec_lab_names": [
-                "6b"
+                "6"
             ],
             "ec_lab_files": [
-                "cell_6b_01_PEIS_C01.mgr",
-                "cell_6b_01_PEIS_C01.mpr",
-                "cell_6b_02_GEIS_C01.mgr",
-                "cell_6b_02_GEIS_C01.mpr",
-                "cell_6b_DUSB0_C01.sta"
+                "cell_6_01_PEIS_C01.mgr",
+                "cell_6_01_PEIS_C01.mpr",
+                "cell_6_02_GEIS_C01.mgr",
+                "cell_6_02_GEIS_C01.mpr",
+                "cell_6_DUSB0_C01.sta"
             ],
             "no_gas_no_water": "T_6_scan_01",
             "gas_no_water": "T_6_scan_02",

@@ -80,8 +80,8 @@ for sample in sample_names:
         correct_name = '4II'
     if sample == '5ii':
         correct_name = '5II'
-    if sample == '6b':
-        correct_name = '6'
+    # if sample == '6b':
+    #     correct_name = '6'
         
     if not sample == '4iib':
         file_dict['samples'][correct_name] = {}
@@ -92,10 +92,10 @@ for sample in sample_names:
         file_dict['samples']['4II']['ec_lab_names'] = file_dict['samples']['4II']['ec_lab_names'] + [sample]
         file_dict['samples']['4II']['ec_lab_files'] = file_dict['samples']['4II']['ec_lab_files'] + sample_files
         
-    # elif sample == '6b':
-    #     sample_files = extract_corresponding_files(sample)
-    #     file_dict['samples']['6']['ec_lab_names'] = file_dict['samples']['6']['ec_lab_names'] + [sample]
-    #     file_dict['samples']['6']['ec_lab_files'] = file_dict['samples']['6']['ec_lab_files'] + sample_files
+    elif sample == '6b':
+        sample_files = extract_corresponding_files(sample)
+        file_dict['samples']['6']['ec_lab_names'] = file_dict['samples']['6']['ec_lab_names'] + [sample]
+        file_dict['samples']['6']['ec_lab_files'] = file_dict['samples']['6']['ec_lab_files'] + sample_files
         
         
 # TODO: start and end of each sample
