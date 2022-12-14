@@ -17,6 +17,7 @@ def extract_sample_names():
     files = os.listdir(EC_folder)
     sample_names = []
     for file in files:
+        if file == 'deprecated': continue
         nosfx = file.split('.')[0]
         name = nosfx.split('_')[1]
         if not name in sample_names:
