@@ -83,7 +83,7 @@ for sample in sample_names:
     if sample == '6b':
         correct_name = '6'
         
-    if not sample == '4iib' and not sample == '6b':
+    if not sample == '4iib':
         file_dict['samples'][correct_name] = {}
         file_dict['samples'][correct_name]['ec_lab_names'] = [sample]
         file_dict['samples'][correct_name]['ec_lab_files'] = extract_corresponding_files(sample)
