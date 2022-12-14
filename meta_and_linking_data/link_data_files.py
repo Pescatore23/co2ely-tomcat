@@ -61,6 +61,7 @@ def read_gas_cues(gas_cue_folder):
 
     
 sample_names = extract_sample_names()
+sample_names.sort()
 
 file_dict = {}
 cues, timestamps, comments = read_gas_cues(gas_cue_folder)

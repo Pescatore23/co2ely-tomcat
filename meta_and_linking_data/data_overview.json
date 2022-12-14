@@ -161,6 +161,29 @@
             "comment": "cathode flow field from former cell 6 due to capillaries ripped off",
             "main EC condition": "pot. stat. 3V"
         },
+        "4": {
+            "ec_lab_names": [
+                "4"
+            ],
+            "ec_lab_files": [
+                "cell_4_01_PEIS_C01.mgr",
+                "cell_4_02_GEIS_C01.mgr",
+                "cell_4_scan1.mps",
+                "cell_4_scan1_01_PEIS_C01.mgr",
+                "cell_4_scan1_01_PEIS_C01.mpr",
+                "cell_4_scan1_02_GEIS_C01.mgr",
+                "cell_4_scan1_02_GEIS_C01.mpr",
+                "cell_4_scan1_DUSB0_C01.sta"
+            ],
+            "no_gas_no_water": "n.a.",
+            "gas_no_water": "n.a.",
+            "gas_water": "T_4_scan_01",
+            "operando": [
+                "T_4_scan_02",
+                "T_4_scan_03"
+            ],
+            "main EC condition": "galv. stat. 3mA"
+        },
         "4II": {
             "ec_lab_names": [
                 "4ii",
@@ -186,49 +209,6 @@
             ],
             "comment": "operando scan 4 cancelled within first minute to fix dangerously moving tubing",
             "main EC condition": "current ramp up"
-        },
-        "4": {
-            "ec_lab_names": [
-                "4"
-            ],
-            "ec_lab_files": [
-                "cell_4_01_PEIS_C01.mgr",
-                "cell_4_02_GEIS_C01.mgr",
-                "cell_4_scan1.mps",
-                "cell_4_scan1_01_PEIS_C01.mgr",
-                "cell_4_scan1_01_PEIS_C01.mpr",
-                "cell_4_scan1_02_GEIS_C01.mgr",
-                "cell_4_scan1_02_GEIS_C01.mpr",
-                "cell_4_scan1_DUSB0_C01.sta"
-            ],
-            "no_gas_no_water": "n.a.",
-            "gas_no_water": "n.a.",
-            "gas_water": "T_4_scan_01",
-            "operando": [
-                "T_4_scan_02",
-                "T_4_scan_03"
-            ],
-            "main EC condition": "galv. stat. 3mA"
-        },
-        "5II": {
-            "ec_lab_names": [
-                "5ii"
-            ],
-            "ec_lab_files": [
-                "cell_5ii_01_PEIS_C01.mgr",
-                "cell_5ii_01_PEIS_C01.mpr",
-                "cell_5ii_02_GEIS_C01.mgr",
-                "cell_5ii_02_GEIS_C01.mpr",
-                "cell_5ii_DUSB0_C01.sta"
-            ],
-            "no_gas_no_water": "T_5II_scan_01",
-            "gas_no_water": "T_5II_scan_02",
-            "gas_water": "T_5II_scan_03",
-            "operando": [
-                "T_5II_scan_04"
-            ],
-            "comment": "flooded rotation stage and probably unreliable EC-measurements",
-            "main EC condition": "pot. stat. 3.5V"
         },
         "5": {
             "ec_lab_names": [
@@ -258,6 +238,26 @@
             ],
             "main EC condition": "galv. stat. initially 3mA, ramped up to 20mA"
         },
+        "5II": {
+            "ec_lab_names": [
+                "5ii"
+            ],
+            "ec_lab_files": [
+                "cell_5ii_01_PEIS_C01.mgr",
+                "cell_5ii_01_PEIS_C01.mpr",
+                "cell_5ii_02_GEIS_C01.mgr",
+                "cell_5ii_02_GEIS_C01.mpr",
+                "cell_5ii_DUSB0_C01.sta"
+            ],
+            "no_gas_no_water": "T_5II_scan_01",
+            "gas_no_water": "T_5II_scan_02",
+            "gas_water": "T_5II_scan_03",
+            "operando": [
+                "T_5II_scan_04"
+            ],
+            "comment": "flooded rotation stage and probably unreliable EC-measurements",
+            "main EC condition": "pot. stat. 3.5V"
+        },
         "6": {
             "ec_lab_names": [
                 "6"
@@ -278,6 +278,18 @@
                 "T_6_scan_06"
             ],
             "main EC condition": "galv. stat. 5mA"
+        },
+        "6b": {
+            "ec_lab_names": [
+                "6b"
+            ],
+            "ec_lab_files": [
+                "cell_6b_01_PEIS_C01.mgr",
+                "cell_6b_01_PEIS_C01.mpr",
+                "cell_6b_02_GEIS_C01.mgr",
+                "cell_6b_02_GEIS_C01.mpr",
+                "cell_6b_DUSB0_C01.sta"
+            ]
         },
         "7x": {
             "ec_lab_names": [
