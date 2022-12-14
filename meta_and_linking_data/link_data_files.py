@@ -15,6 +15,7 @@ gas_cue_folder = r"U:\07_X_ray\005_TOMCAT_2022\01_gas_cues"
 
 def extract_sample_names():
     files = os.listdir(EC_folder)
+    files.sort()
     sample_names = []
     for file in files:
         if file == 'deprecated': continue
