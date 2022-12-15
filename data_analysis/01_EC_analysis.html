@@ -14597,15 +14597,28 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="EC-data-analysis-with-corresponding-image-data">EC data analysis with corresponding image data<a class="anchor-link" href="#EC-data-analysis-with-corresponding-image-data">&#182;</a></h1><p>This notebook plots important elecetrochemical data for CO2ELY and compares it to concurrent and potentially relevant imaging results </br>
+<h1 id="EC-data-analysis-with-corresponding-image-data">EC data analysis with corresponding image data<a class="anchor-link" href="#EC-data-analysis-with-corresponding-image-data">&#182;</a></h1>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>This notebook plots important elecetrochemical data for CO2ELY and compares it to concurrent and potentially relevant imaging results </br>
 careful: currently all cells of one EC-cell need to be executed to update the variables to the current cell</p>
-<p>TODO:</p>
-<ol>
+<h2 id="TODO:">TODO:<a class="anchor-link" href="#TODO:">&#182;</a></h2><ol>
+<li>post-calibrate temperatue (exp.)</li>
 <li>add Bernhard data as reference</li>
-<li>review gas cues</li>
+<li>rotate image data to be able to see membrane in-plane (write Pyethon code, not feasible in ImageJ)</li>
+<li>merge all scans of sample in one .nc after rotation</li>
+<li>add image observations; membrane cracking, swelling, water blockage</li>
 </ol>
-<p>$\hat{H}\Psi=E\Psi$</p>
-
+<p>you can write LaTeX in here :) </br></p>
+$$f(x)=\sum_{n=0}^\inf\frac{f^{(n)}(x_0)}{n!}\left(x-x_0\right)^n$$
 </div>
 </div>
 </div>
@@ -14933,8 +14946,7 @@ careful: currently all cells of one EC-cell need to be executed to update the va
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># load data TODO wrap into function and provided small dossier as dict</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;4&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;4&#39;</span>
 <span class="c1">##load EC data</span>
 <span class="n">ECdata</span> <span class="o">=</span> <span class="n">load_sample_data</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">overview</span><span class="p">,</span> <span class="n">EC_path</span><span class="p">)</span>
 <span class="n">Q</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">Im</span><span class="p">,</span> <span class="n">Re</span><span class="p">,</span> <span class="n">timestamps</span><span class="p">,</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">get_principal_data</span><span class="p">(</span><span class="n">ECdata</span><span class="p">)</span>
@@ -14996,7 +15008,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -15052,7 +15064,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-5">Cell 5<a class="anchor-link" href="#Cell-5">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic operation 10mA and 15mA <br /></p>
+<h2 id="Cell-5">Cell 5<a class="anchor-link" href="#Cell-5">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic operation 10mA and 15mA <br /></p>
 
 </div>
 </div>
@@ -15065,8 +15088,7 @@ class="
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># load data TODO wrap into function and provided small dossier as dict</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>
 <span class="c1">##load EC data</span>
 <span class="n">ECdata</span> <span class="o">=</span> <span class="n">load_sample_data</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">overview</span><span class="p">,</span> <span class="n">EC_path</span><span class="p">)</span>
 <span class="n">Q</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">Im</span><span class="p">,</span> <span class="n">Re</span><span class="p">,</span> <span class="n">timestamps</span><span class="p">,</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">get_principal_data</span><span class="p">(</span><span class="n">ECdata</span><span class="p">)</span>
@@ -15128,7 +15150,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -15184,7 +15206,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-6">Cell 6<a class="anchor-link" href="#Cell-6">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic operation 5mA<br /></p>
+<h2 id="Cell-6">Cell 6<a class="anchor-link" href="#Cell-6">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic operation 5mA<br /></p>
 
 </div>
 </div>
@@ -15260,7 +15293,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -15333,7 +15366,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-3II">Cell 3II<a class="anchor-link" href="#Cell-3II">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Potentiostatic operation 3.5V</p>
+<h2 id="Cell-3II">Cell 3II<a class="anchor-link" href="#Cell-3II">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Potentiostatic operation 3.5V</p>
 
 </div>
 </div>
@@ -15430,7 +15474,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -15486,7 +15530,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-5II">Cell 5II<a class="anchor-link" href="#Cell-5II">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Potentiostatic operation 3.5V</p>
+<h2 id="Cell-5II">Cell 5II<a class="anchor-link" href="#Cell-5II">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Potentiostatic operation 3.5V</p>
 
 </div>
 </div>
@@ -15594,7 +15649,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -15650,7 +15705,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-4II">Cell 4II<a class="anchor-link" href="#Cell-4II">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>current rampup <br />
+<h2 id="Cell-4II">Cell 4II<a class="anchor-link" href="#Cell-4II">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>current rampup <br />
 potential safety limit overflow -&gt; filter extreme E values</p>
 
 </div>
@@ -15748,7 +15814,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -15804,7 +15870,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-8x">Cell 8x<a class="anchor-link" href="#Cell-8x">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>current rampup <br /></p>
+<h2 id="Cell-8x">Cell 8x<a class="anchor-link" href="#Cell-8x">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>current rampup <br /></p>
 
 </div>
 </div>
@@ -15880,7 +15957,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -15936,7 +16013,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-3III">Cell 3III<a class="anchor-link" href="#Cell-3III">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic 14 mA</p>
+<h2 id="Cell-3III">Cell 3III<a class="anchor-link" href="#Cell-3III">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic 14 mA</p>
 
 </div>
 </div>
@@ -16033,7 +16121,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
@@ -16089,7 +16177,18 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Cell-7x">Cell 7x<a class="anchor-link" href="#Cell-7x">&#182;</a></h2><h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic 5mA <br />
+<h2 id="Cell-7x">Cell 7x<a class="anchor-link" href="#Cell-7x">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="short-description">short description<a class="anchor-link" href="#short-description">&#182;</a></h3><p>Galvanostatic 5mA <br />
 GDL with punch slits</p>
 
 </div>
@@ -16166,7 +16265,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTm scans
+<h3 id="EC-with-gas-cues-and-XTM-time-steps">EC with gas cues and XTM time steps<a class="anchor-link" href="#EC-with-gas-cues-and-XTM-time-steps">&#182;</a></h3><p>black vertical lines: XTM scans </br>
 blue vertical lines: cues for e.g. changes in gas flow</p>
 
 </div>
