@@ -19,6 +19,7 @@ import subprocess
 
 px = 2.75E-6
 njobs = 16
+samples = ['1', '3II', '3III', '4', '4II', '5II', '5', '6', '7x', '8x']
 
 # paths, add locations if another machine, e.g. ra is used
 if host == 'mpc2959.psi.ch':
@@ -36,7 +37,7 @@ os.chdir(cwd)
 processing_path = os.path.join(toppath, 'processing')
 
 path_00_3p1D = os.path.join(processing_path, '00_cropped_vis_in_FIJI')
-path_01_rotated = os.path.join(processing_path, '00_rotated_3p1D')
+path_01_rotated = os.path.join(processing_path, '01_rotated_3p1D')
 
 if not os.path.exists(path_01_rotated):
     os.mkdir(path_01_rotated)
@@ -156,4 +157,10 @@ def rotate_sample(sample):
     return data
     
     
-    
+def run_and_save_data(samples):
+    for sample in samples:
+        print(sample)
+        data = rotate_sample(sample)
+        datafile = ''.join(['01_',sample,'_rotated_3p1D.nc'])
+        datapath = os.path.join(path_01_rotated, datafile)
+        data.to_netcdf(datapath)
