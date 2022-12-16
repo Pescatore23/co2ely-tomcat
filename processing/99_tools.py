@@ -46,3 +46,5 @@ def convert_4D_nc_to_3plus1D(path, destination, key='image_data'):
     data3D.to_netcdf(destination)
     
     return data3D
+
+# TODO: method to convert 3+1D to 4D
