@@ -61,7 +61,7 @@ def rotate_scan(path, njobs=njobs):
     filenames = data['filenames'].data
     
     image_keys = list(data.keys())
-    for key in image_keys():
+    for key in image_keys:
         if not key[:4] == 'imag':
             image_keys.remove(key)
     
