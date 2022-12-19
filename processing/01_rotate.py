@@ -12,14 +12,24 @@ import numpy as np
 import xarray as xr
 import json
 from joblib import Parallel, delayed
-
+import argparse
 import socket
 host = socket.gethostname()
 import subprocess
 
 px = 2.75E-6
-njobs = 16
+# njobs = 32
 samples = ['1', '3II', '3III', '4', '4II', '5II', '5', '6', '7x', '8x']
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-db', '--debug', type = str, default = False, help = 'debug or not, default False')
+parser.add_argument('-n', '--njobs', type = str, default = 64, help = 'how many threads to use, default 64')
+args = parser.parse_args()
+
+# TODO: debug might not work this way, input may have to be converted from str
+debug = args.debug
+njobs = args.njobs
 
 # paths, add locations if another machine, e.g. ra is used
 if host == 'mpc2959.psi.ch':
@@ -60,10 +70,11 @@ def rotate_scan(path, njobs=njobs):
     time = data['time'].data
     filenames = data['filenames'].data
     
-    image_keys = list(data.keys())
-    for key in image_keys:
-        if not key[:4] == 'imag':
-            image_keys.remove(key)
+    data_keys = list(data.keys())
+    image_keys = []
+    for key in data_keys:
+        if key[:4] == 'imag':
+            image_keys.append(key)
     
     new_keys = []
     for key in image_keys:
@@ -73,7 +84,8 @@ def rotate_scan(path, njobs=njobs):
     rot_params = json.load(open(rot_info_path, 'r'))
     filenames = filenames[:,rot_params['crop_after_rot'][-2]:rot_params['crop_after_rot'][-1]]
     
-    results = Parallel(n_jobs=njobs, temp_folder=temppath)(delayed(rotate_time_scan(key,data, rot_params)) for key in image_keys)
+    # results = Parallel(n_jobs=njobs, temp_folder=temppath)(delayed(rotate_time_scan)(image_keys[i], data, rot_params) for i in range(len(image_keys)))
+    results = Parallel(n_jobs=njobs, temp_folder=temppath)(delayed(rotate_time_scan)(key, data, rot_params) for key in image_keys)
     data.close()
     
     return {'keys': new_keys, 'images': results, 't_utc': t_utc, 'time':time}, filenames, attrs, scan_nr, rot_params
@@ -92,22 +104,24 @@ def rotate_sample(sample):
     
     rotated_dict = {}
     for file in sample_files:
+        print(file)
         rotated_dict[file] = rotate_scan(file)
-        
+    
+    print('calclulated everything, putting it in dataset ... ')
     # TODO: concatenate t_utc, time, filenames
     t_utc = []
     time = []
     filenames = []
     for file in sample_files:
-        t_utc_i = rotated_dict[file][0]['t_utc]']
+        t_utc_i = rotated_dict[file][0]['t_utc']
         time_i = rotated_dict[file][0]['time']
         t_utc = t_utc + [t_utc_i]
-        time = time_i + [time]
+        time = time + [time_i]
         filenames.append(rotated_dict[file][1])
         
     t_utc = np.concatenate(t_utc)
     time = np.concatenate(time)
-    filenames = np.stack(filenames, axis= 0)
+    filenames = np.concatenate(filenames, axis= 0)
         
     # set up the dataset with one 3D scan
     key0 = rotated_dict[sample_files[0]][0]['keys'][0]
@@ -141,14 +155,16 @@ def rotate_sample(sample):
                                 'post rotation cropping coordinates [a:b,c:d,e:f]': rot_params['crop_after_rot'],
                                 'rotation angle': rot_params['angle'],
                                 'git_sha_rotation': git_sha,
-                                'githash_rotation': githash
+                                'githash_rotation': githash,
+                                'image_data_names': '<scan>_iamge_data_<time_step>, e.g. 02_image_data_00 is the first time step of scan 02'
                                 }
                               )
     
     # populate data with the remaining data
     for file in sample_files:
         scan_nr = rotated_dict[file][3]
-        data.attrs[scan_nr+'_attrs'] = rotated_dict[file][2]
+        data.attrs[scan_nr+'_crop_git_sha'] = rotated_dict[file][2]['cropping:git_sha']
+        data.attrs[scan_nr+'_crop_githash'] = rotated_dict[file][2]['githash']
         result_dict = rotated_dict[file][0]
         for (key, im) in zip(result_dict['keys'], result_dict['images']):
             if not key in data.keys():
@@ -164,3 +180,6 @@ def run_and_save_data(samples):
         datafile = ''.join(['01_',sample,'_rotated_3p1D.nc'])
         datapath = os.path.join(path_01_rotated, datafile)
         data.to_netcdf(datapath)
+        
+if not debug:
+    run_and_save_data(samples)
