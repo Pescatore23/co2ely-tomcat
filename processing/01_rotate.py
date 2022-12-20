@@ -144,7 +144,7 @@ def rotate_sample(sample):
                         'filenames': (['t_utc','z'], filenames)
                         },
                       coords = {
-                          't_utc': time,
+                          't_utc': t_utc,
                           'x': x,
                           'y': y,
                           'z': z
