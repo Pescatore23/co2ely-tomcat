@@ -1,6 +1,7 @@
 {
     "sample": "3II",
-    "angle": -1.15,
+    "angle1": -1.15,
+    "angle2": -0.27,
     "crop_after_rot": [
         5,
         769,
