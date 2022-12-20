@@ -34,7 +34,8 @@ njobs = args.njobs
 # paths, add locations if another machine, e.g. ra is used
 if host == 'mpc2959.psi.ch':
     gitpath = '/mpc/homes/fische_r/lib/co2ely-tomcat'
-    toppath = '/mpc/homes/fische_r/NAS/DASCOELY'
+    # toppath = '/mpc/homes/fische_r/NAS/DASCOELY'
+    toppath = '/mnt/SSD/fische_r/COELY'
     temppath = '/mnt/SSD/fische_r/tmp/joblib_tmp'
         
 scriptpath = os.path.dirname(__file__)
@@ -44,7 +45,8 @@ git_sha = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decod
 githash = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
 os.chdir(cwd)
     
-processing_path = os.path.join(toppath, 'processing')
+# processing_path = os.path.join(toppath, 'processing')
+processing_path = toppath
 
 path_00_3p1D = os.path.join(processing_path, '00_cropped_vis_in_FIJI')
 path_01_rotated = os.path.join(processing_path, '01_rotated_3p1D')
@@ -53,10 +55,12 @@ if not os.path.exists(path_01_rotated):
     os.mkdir(path_01_rotated)
 
 def rotate_time_scan(key, data, rot_params):
-    rotangle = rot_params['angle']
+    rotangle1 = rot_params['angle1']
+    rotangle2 = rot_params['angle2']
     a,b,c,d,e,f = rot_params['crop_after_rot']
     im = data[key].data
-    im = sp.ndimage.rotate(im, rotangle)
+    im = sp.ndimage.rotate(im, rotangle1)
+    im = sp.ndimage.rotate(im, rotangle2, axis = (2,1))
     im = im[a:b,c:d,e:f]
     return im
     
@@ -153,7 +157,8 @@ def rotate_sample(sample):
                                 'voxel size': '2.75 um',
                                 'voxel': px,
                                 'post rotation cropping coordinates [a:b,c:d,e:f]': rot_params['crop_after_rot'],
-                                'rotation angle': rot_params['angle'],
+                                'rotation angle 1': rot_params['angle1'],
+                                'rotation angle 2': rot_params['angle1'],
                                 'git_sha_rotation': git_sha,
                                 'githash_rotation': githash,
                                 'image_data_names': '<scan>_iamge_data_<time_step>, e.g. 02_image_data_00 is the first time step of scan 02'
