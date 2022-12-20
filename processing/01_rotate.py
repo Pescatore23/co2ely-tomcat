@@ -60,7 +60,7 @@ def rotate_time_scan(key, data, rot_params):
     a,b,c,d,e,f = rot_params['crop_after_rot']
     im = data[key].data
     im = sp.ndimage.rotate(im, rotangle1)
-    im = sp.ndimage.rotate(im, rotangle2, axis = (2,1))
+    im = sp.ndimage.rotate(im, rotangle2, axes = (2,1))
     im = im[a:b,c:d,e:f]
     return im
     
