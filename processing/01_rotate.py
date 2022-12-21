@@ -35,6 +35,7 @@ debug = args.debug
 njobs = args.njobs
 if args.sample is not None:
     samples = [args.sample]
+print(samples)
 
 # paths, add locations if another machine, e.g. ra is used
 if host == 'mpc2959.psi.ch':
