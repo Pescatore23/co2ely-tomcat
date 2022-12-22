@@ -24,18 +24,21 @@ samples = ['1', '3II', '3III', '4', '4II', '5II', '5', '6', '7x', '8x']
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-db', '--debug', type = bool, default = False, help = 'debug or not, default False')
+parser.add_argument('-db', '--debug', type = str, default = 'no', help = 'debug or not, default Fno, option yes')
 parser.add_argument('-n', '--njobs', type = str, default = 64, help = 'how many threads to use, default 64')
 parser.add_argument('-s', '--sample', type = str, default = None, help = 'rotate just the specified sample, default None')
 
 args = parser.parse_args()
 
 # TODO: debug might not work this way, input may have to be converted from str
-debug = args.debug
+debug = False
+if args.debug == 'yes':
+    debug = True
 njobs = args.njobs
 if args.sample is not None:
     samples = [args.sample]
 print(samples)
+print(debug)
 
 # paths, add locations if another machine, e.g. ra is used
 if host == 'mpc2959.psi.ch':
