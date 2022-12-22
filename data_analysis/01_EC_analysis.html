@@ -14606,7 +14606,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>This notebook plots important elecetrochemical data for CO2ELY and compares it to concurrent and potentially relevant imaging results </br>
+<p>This notebook plots important electrochemical data for CO2ELY and compares it to concurrent and potentially relevant imaging results </br>
 careful: currently all Jupyter-cells of one EC-sample need to be executed to update the variables to the current sample</p>
 <h2 id="TODO:">TODO:<a class="anchor-link" href="#TODO:">&#182;</a></h2><ol>
 <li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>post-calibrate temperatue (exp.)</li>
@@ -14614,7 +14614,7 @@ careful: currently all Jupyter-cells of one EC-sample need to be executed to upd
 <li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled checked/>rotate image data to be able to see membrane in-plane (write Python code, not feasible in ImageJ)</li>
 <li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled checked/>merge all scans of sample in one .nc after rotation</li>
 <li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>add image observations; membrane cracking, swelling, water blockage</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled checked/>convert tomo data to densities, i.e. mA/cm2 instead of rescaling Bernahrd's data</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled checked/>convert tomo data to densities, i.e. mA/cm2 instead of rescaling Bernhard's data</li>
 </ol>
 <p>you can write LaTeX in here :) </br></p>
 $$E = E_0 - \frac{RT}{zF}\ln Q_r$$
@@ -15002,17 +15002,15 @@ class="
 
 </div>
 
-</div>yStack = np.zeros((700,900, len(images)), dtype=np.uint16) #100, 800, 200, 1100
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput ">
 
-for i in range(len(images)):
-    im = data[images[i]].sel(y= 335)[100:800, 200:1100].data
-    yStack[:,:,i] = im# 100, 500, 250,400
-zStack = np.zeros((400,150, len(images)), dtype=np.uint16) 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput ">
 
-for i in range(len(images)):
-    im = data[images[i]].sel(z= 768)[100:500, 250:400].data
-    zStack[:,:,i] = imnames = ['T_5_z_slice_768_ts_'+f'{i:02d}'+'.tif' for i in range(zStack.shape[2])]path = '/mpc/homes/fische_r/NAS/DASCOELY/analysis/00_first_visual_inspection/T_5_z_slice_768'
-# robpylib.CommonFunctions.ImportExport.WriteStackNew(path,names,zStack)
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput ">
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput ">
+
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -15022,22 +15020,10 @@ for i in range(len(images)):
 <li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>make video for a-h)</li>
 </ul>
 <h4 id="Notes">Notes<a class="anchor-link" href="#Notes">&#182;</a></h4><ul>
-<li>a)</li>
-</ul>
-<p>first gas bubbles with switch to $2.5~V $in preconditioning step</p>
-<ul>
-<li>b-c)</li>
-</ul>
-<p>delamination appears to become stronger with increase of current density to $150~mAcm^{-2}$</p>
-<ul>
-<li>d)</li>
-</ul>
-<p>even more gas at maximum $J=200~mAcm^{-2}$, or maybe accumulated</p>
-<ul>
-<li>e-h)</li>
-</ul>
-<p>same time steps at different perspective</p>
-<ul>
+<li>a) first gas bubbles with switch to $2.5~V $in preconditioning step</li>
+<li>b-c) delamination appears to become stronger with increase of current density to $150~mAcm^{-2}$</li>
+<li>d) even more gas at maximum $J=200~mAcm^{-2}$, or maybe accumulated</li>
+<li>e-h) same time steps at different perspective</li>
 <li>i) visually maximal amount of liquid water in GDL, different location from membrane location, but close to channel clogging</li>
 <li>j) reference at initial operation</li>
 <li>k) reference at suspected flooded state</li>
