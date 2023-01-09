@@ -28,6 +28,8 @@ if host == 'mpc2959.psi.ch':
 path_01_4D = os.path.join(toppath, '01_rotated_3p1D')
 registration_mask_path = os.path.join(gitpath, 'processing', 'masking_for_registration.json')  
 outpath_02  = os.path.join(toppath, '02_registered_3p1D')
+if not os.path.exists(outpath_02):
+	os.mkdir(outpath_02)
       
 # git hash
 scriptpath = os.path.dirname(__file__)
