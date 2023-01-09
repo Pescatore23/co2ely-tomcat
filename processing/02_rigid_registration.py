@@ -13,15 +13,10 @@ import socket
 host = socket.gethostname()
 import SimpleITK as sitk
 import numpy as np
-from joblib import Parallel, delayed
+# from joblib import Parallel, delayed  ## simpleITK appearantly does not work with joblib embarassing parallelisation
 import subprocess
 
 samples = ['1', '3II', '3III', '4', '4II', '5II', '5', '6', '7x', '8x']
-
-#parallelization settings, RAM is the limitation, 8 should be fine
-njobs = 8
-temppath = None #see below for host specific temppath
-
 
 # paths
 if host == 'mpc2959.psi.ch':
@@ -140,7 +135,7 @@ def register_sample(sample):
     a,b,c,d,e,f = mask_dimension[sample]
     mask[a:b,c:d,e:f] = 1 #
     
-    results = Parallel(n_jobs=njobs, temp_folder=temppath)(delayed(register_images_general)(im_fixed, data[image].data, parameterMap, im_mask=mask) for image in images)
+    results = [register_images_general(im_fixed, data[image].data, parameterMap, im_mask=mask) for image in images]
     
     
     # set up the dataset with one 3D scan
