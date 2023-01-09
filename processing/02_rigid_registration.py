@@ -126,7 +126,7 @@ def register_sample(sample):
     # open data
     file = '01_'+sample+'_rotated_3p1D.nc'
     imagepath = os.path.join(path_01_4D, file)
-    data = xr.open_dataset(imagepath)
+    data = xr.load_dataset(imagepath)
     # px = data['voxel']
     
     images = [im for im in data.keys() if im[3:7] == 'imag']
