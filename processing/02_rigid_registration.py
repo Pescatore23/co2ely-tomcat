@@ -115,7 +115,7 @@ def register_images_general(im_fixed, im_tomove, parameter_map, verbose=False, i
     im_aligned = elastixImageFilter.GetResultImage()
     # Transfor again to numpy
     im_aligned = sitk.GetArrayFromImage(im_aligned)
-    return im_aligned
+    return np.uint16(im_aligned)
 
 
 def register_sample(sample):
