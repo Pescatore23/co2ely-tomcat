@@ -7,7 +7,7 @@ Created on Fri Dec  2 15:29:17 2022
 
 import xarray as xr
 
-def convert_4D_nc_to_3plus1D(path, destination, key='image_data'):
+def convert_4D_nc_to_3plus1D(path, destination, datakey='image_data'):
     '''
     
 
@@ -25,7 +25,7 @@ def convert_4D_nc_to_3plus1D(path, destination, key='image_data'):
     None.
 
     '''
-    data4D = xr.open_dataset(path)
+    data4D = xr.open_dataset(path)[datakey]
     x = data4D['x'].data
     y = data4D['y'].data
     z = data4D['z'].data
@@ -38,13 +38,13 @@ def convert_4D_nc_to_3plus1D(path, destination, key='image_data'):
                           'z': z
                           },
                       )
-    for i in range(1,2):
+    for i in range(data4D.shape[-1]):
         key = 'image_data_'+ f'{i:02d}'
         data3D[key] = (['x','y','z'], data4D[...,i].data)
         
     data3D.attrs = data4D.attrs
     data3D.to_netcdf(destination)
-    
+    data4D.close()
     return data3D
 
 # TODO: method to convert 3+1D to 4D
