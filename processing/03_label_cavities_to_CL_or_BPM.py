@@ -257,3 +257,8 @@ def assign_labels(sample, segcropdict):
     
     seg_data.to_netcdf(segpath)
     
+    
+samples = list(segcropdict.keys())
+
+for sample in samples:
+    assign_labels(sample, segcropdict)
