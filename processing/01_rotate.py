@@ -167,7 +167,7 @@ def rotate_sample(sample):
                                 'voxel': px,
                                 'post rotation cropping coordinates [a:b,c:d,e:f]': rot_params['crop_after_rot'],
                                 'rotation angle 1': rot_params['angle1'],
-                                'rotation angle 2': rot_params['angle1'],
+                                'rotation angle 2': rot_params['angle2'],
                                 'git_sha_rotation': git_sha,
                                 'githash_rotation': githash,
                                 'image_data_names': '<scan>_iamge_data_<time_step>, e.g. 02_image_data_00 is the first time step of scan 02'
