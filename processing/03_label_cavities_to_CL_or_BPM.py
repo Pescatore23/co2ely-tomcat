@@ -15,6 +15,7 @@ import scipy as sp
 import cupyx.scipy.ndimage as GPUndimage
 import xarray as xr
 import dask
+import dask.array
 from joblib import Parallel, delayed
 GPUball = cucim.skimage.morphology.ball
 ball = skimage.morphology.ball
@@ -129,7 +130,7 @@ def mask_from_membrane(im, minsize = 200, fp_radius = 1, i=0, GPU = True):
             labels, counts = cp.unique(im, return_counts=True)
             biggest_label = labels[1:][np.argmax(counts[1:])]
             im = im == biggest_label
-            im = cucim.morphology.binary_dilation(im, footprint=cucim.skimage.morphology.ball(3))
+            im = cucim.skimage.morphology.binary_dilation(im, footprint=cucim.skimage.morphology.ball(3))
             im = cp.asnumpy(im)
             mempool = cp.get_default_memory_pool()
             mempool.free_all_blocks()
