@@ -10,8 +10,8 @@ import os
 import json
 import eclabfiles as ecf
 
-EC_folder = r"U:\07_X_ray\005_TOMCAT_2022\02_EC_lab_files"
-gas_cue_folder = r"U:\07_X_ray\005_TOMCAT_2022\01_gas_cues"
+EC_folder = r"I:\01_imaging_at_TOMCAT_Robert\02_EC_data_for_image_data"
+gas_cue_folder = r"I:\01_imaging_at_TOMCAT_Robert\03_gas_flow_changes_with_timestamp"
 
 def extract_sample_names():
     files = os.listdir(EC_folder)

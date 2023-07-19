@@ -112,7 +112,7 @@
             "300 ml/min"
         ]
     },
-    "EC_folder": "U:\\07_X_ray\\005_TOMCAT_2022\\02_EC_lab_files",
+    "EC_folder": "I:\\01_imaging_at_TOMCAT_Robert\\02_EC_data_for_image_data",
     "samples": {
         "3": {
             "pre-damage": "T_3_scan_02",
@@ -166,8 +166,6 @@
                 "4"
             ],
             "ec_lab_files": [
-                "cell_4_01_PEIS_C01.mgr",
-                "cell_4_02_GEIS_C01.mgr",
                 "cell_4_scan1.mps",
                 "cell_4_scan1_01_PEIS_C01.mgr",
                 "cell_4_scan1_01_PEIS_C01.mpr",
@@ -216,12 +214,6 @@
             ],
             "ec_lab_files": [
                 "cell_5_scan1.mps",
-                "cell_5_scan1b.mps",
-                "cell_5_scan1b_01_PEIS_C01.mgr",
-                "cell_5_scan1b_01_PEIS_C01.mpr",
-                "cell_5_scan1b_02_GEIS_C01.mgr",
-                "cell_5_scan1b_02_GEIS_C01.mpr",
-                "cell_5_scan1b_DUSB0_C01.sta",
                 "cell_5_scan1_01_PEIS_C01.mgr",
                 "cell_5_scan1_01_PEIS_C01.mpr",
                 "cell_5_scan1_02_GEIS_C01.mgr",
