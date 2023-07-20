@@ -182,6 +182,8 @@ segcropdict = {
     '3III': (10,-10,10,-10,10,-10),
     '4II': (10,-10,10,-10,200,-10),
     '6': (10,-10,10,-10,10,-10),
+    '7x': (10,-10,10,-10,10,-10),
+    '8x': (10,-10,10,-10,10,-10)
     }    
 
 def assign_labels(sample, segcropdict): 
@@ -262,4 +264,5 @@ def assign_labels(sample, segcropdict):
 samples = list(segcropdict.keys())
 
 for sample in samples:
-    assign_labels(sample, segcropdict)
+    if sample=='7x' or sample=='8x':
+	    assign_labels(sample, segcropdict)
