@@ -214,6 +214,10 @@
             ],
             "ec_lab_files": [
                 "cell_5_scan1.mps",
+                "cell_5_scan1b.mps",
+                "cell_5_scan1b_02_GEIS_C01.mgr",
+                "cell_5_scan1b_02_GEIS_C01.mpr",
+                "cell_5_scan1b_DUSB0_C01.sta",
                 "cell_5_scan1_01_PEIS_C01.mgr",
                 "cell_5_scan1_01_PEIS_C01.mpr",
                 "cell_5_scan1_02_GEIS_C01.mgr",
