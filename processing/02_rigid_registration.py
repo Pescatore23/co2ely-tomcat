@@ -59,7 +59,7 @@ parameterMap["NumberOfSpatialSamples"] = ["10000"]
 
 # copied from Salvo's and Mayank's code
 # TODO: adapat for own purpose, i.e. masking, parallelization, affine registration, transformation matrix
-def register_images_general(im_fixed, im_tomove, parameter_map, verbose=False, im_mask=None):
+def register_images_general(image_name, im_fixed, im_tomove, parameter_map, transpath, verbose=False, im_mask=None):
 
     r"""
     General registration for 2D or 3D images
@@ -111,20 +111,46 @@ def register_images_general(im_fixed, im_tomove, parameter_map, verbose=False, i
     # Disable/enable logging 
     elastixImageFilter.SetLogToConsole(verbose)
     elastixImageFilter.Execute()
+    
+    # save transformation vector
+    vectorpath = os.path.join(transpath, image_name+'.txt')
+    transformParameterMapVector = elastixImageFilter.GetTransformParameterMap()
+    sitk.WriteParameterFile(transformParameterMapVector[0], vectorpath)
+    
 
     im_aligned = elastixImageFilter.GetResultImage()
     # Transfor again to numpy
     im_aligned = sitk.GetArrayFromImage(im_aligned)
     return np.uint16(im_aligned)
 
+def transform_images(image_name, im_tomove, transpath, verbose=False):
+    
+    itk_image_tomove = sitk.GetImageFromArray(im_tomove)
+    elastixImageFilter = sitk.ElastixImageFilter()
+    elastixImageFilter.SetMovingImage(itk_image_tomove)
+ 
+    # load and apply transformation vector
+    vectorpath = os.path.join(transpath, image_name+'.txt')
+    transformParameterMapVector = sitk.ReadParameterFile(vectorpath)
+    im_aligned = sitk.Transformix(itk_image_tomove, transformParameterMapVector)
+    
+    # Transfor again to numpy
+    im_aligned = sitk.GetArrayFromImage(im_aligned)   
+    
+    return np.uint16(im_aligned)
 
-def register_sample(sample):
+
+def register_sample(sample, apply_transform=None):
     
     # open data
     file = '01_'+sample+'_rotated_3p1D.nc'
     imagepath = os.path.join(path_01_4D, file)
     data = xr.load_dataset(imagepath)
     # px = data['voxel']
+    transpath = os.path.join(scriptpath, 'transformation_vectors', sample)
+    
+    if not os.path.exists(transpath):
+        os.mkdirs(transpath)
     
     images = [im for im in data.keys() if im[3:7] == 'imag']
     images.sort()
@@ -137,7 +163,10 @@ def register_sample(sample):
     a,b,c,d,e,f = mask_dimension[sample]
     mask[a:b,c:d,e:f] = 1 #
     
-    results = [register_images_general(im_fixed, data[image].data, parameterMap, im_mask=mask) for image in images]
+    if not apply_transform:
+        results = [register_images_general(image_name, im_fixed, data[image_name].data, parameterMap, transpath, im_mask=mask) for image_name in images]
+    else:
+        results = [transform_images(image_name, data[image_name].data, parameterMap, transpath, im_mask=mask) for image_name in images]
     
     
     # set up the dataset with one 3D scan
