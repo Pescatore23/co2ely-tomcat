@@ -22,11 +22,12 @@ samples = ['4']
 # paths
 if host == 'mpc2959.psi.ch':
     gitpath = '/mpc/homes/fische_r/lib/co2ely-tomcat'
-    # toppath = '/mpc/homes/fische_r/NAS/DASCOELY'
+    toppathHDD = '/mpc/homes/fische_r/NAS/DASCOELY/processing'
     toppath = '/mnt/SSD/fische_r/COELY'
     temppath = '/mnt/SSD/fische_r/tmp/joblib_tmp'
     
-path_01_4D = os.path.join(toppath, '01_rotated_3p1D')
+# path_01_4D = os.path.join(toppath, '01_rotated_3p1D')
+path_01_4D = os.path.join(toppathHDD, '01_rotated_3p1D')
 registration_mask_path = os.path.join(gitpath, 'processing', 'masking_for_registration.json')  
 outpath_02  = os.path.join(toppath, '02_registered_3p1D')
 if not os.path.exists(outpath_02):
