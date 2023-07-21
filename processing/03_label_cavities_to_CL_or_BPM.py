@@ -264,5 +264,5 @@ def assign_labels(sample, segcropdict):
 samples = list(segcropdict.keys())
 
 for sample in samples:
-    if sample=='7x' or sample=='8x':
+    if sample=='8x':
 	    assign_labels(sample, segcropdict)
