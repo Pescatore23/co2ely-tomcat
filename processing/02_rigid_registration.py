@@ -17,6 +17,7 @@ import numpy as np
 import subprocess
 
 samples = ['1', '3II', '3III', '4', '4II', '5II', '5', '6', '7x', '8x']
+samples = ['4']
 
 # paths
 if host == 'mpc2959.psi.ch':
@@ -200,7 +201,7 @@ for sample in samples:
     print(sample)
     print('rigid registration scans')
     data_reg = register_sample(sample)
-    datafile = ''.join(['02_',sample,'_registered_3p1D.nc'])
+    datafile = ''.join(['02_',sample,'_registered_3p1D_repeat.nc'])
     datapath = os.path.join(outpath_02, datafile)
     print('save file to disk')
     data_reg.to_netcdf(datapath)
