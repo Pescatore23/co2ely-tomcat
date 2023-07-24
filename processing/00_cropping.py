@@ -25,8 +25,8 @@ git_sha = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decod
 githash = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
 os.chdir(cwd)
 
-rawDataFolder = '/das/home/fische_r/SLSCOELY'
-baseFolder = '/das/home/fische_r/DASCOELY/Data10/disk1'
+rawDataFolder = '/das/home/fische_r/DASCOELY/disk1'
+baseFolder = '/das/home/fische_r/DASCOELY/disk1'
 destination = '/das/home/fische_r/DASCOELY/processing'
 croppath = '/das/home/fische_r/DASCOELY/processing/cropping.nc'
 
@@ -204,8 +204,8 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdata):
     return data, data2
 
 def run():
-    dest1 = os.path.join(destination, ''.join(['00_',sample,'_cropped_4D.nc']))
-    dest2 = os.path.join(destination, ''.join(['00_',sample,'_cropped_3Dp1D.nc']))
+    dest1 = os.path.join(destination, ''.join(['00_',sample,'_abs_cropped_4D.nc']))
+    dest2 = os.path.join(destination, ''.join(['00_',sample,'_abs_cropped_3Dp1D.nc']))
     
     data, data2 = create_h5(sample, baseFolder, rawDataFolder, cropdata)
     data.to_netcdf(dest1)

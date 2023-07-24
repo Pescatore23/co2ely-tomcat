@@ -1,6 +1,6 @@
 #!/bin/bash -l
 #SBATCH --job-name=$1recos_to_h5
-#SBATCH --time=4:00:00
+#SBATCH --time=6:00:00
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=200G
