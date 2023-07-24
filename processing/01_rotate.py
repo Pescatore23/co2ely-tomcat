@@ -46,6 +46,13 @@ if host == 'mpc2959.psi.ch':
     # toppath = '/mpc/homes/fische_r/NAS/DASCOELY'
     toppath = '/mnt/SSD/fische_r/COELY'
     temppath = '/mnt/SSD/fische_r/tmp/joblib_tmp'
+    
+elif host[:2] == 'ra':
+    gitpath = '/das/home/fische_r/lib/coely'
+    toppath = '/das/home/fische_r/DASCOELY/processing'
+    temppath = None
+else:
+    print('host '+host+' not known')
         
 scriptpath = os.path.dirname(__file__)
 cwd = os.getcwd()
@@ -57,8 +64,8 @@ os.chdir(cwd)
 # processing_path = os.path.join(toppath, 'processing')
 processing_path = toppath
 
-path_00_3p1D = os.path.join(processing_path, '00_cropped_vis_in_FIJI')
-path_01_rotated = os.path.join(processing_path, '01_rotated_3p1D')
+path_00_3p1D = os.path.join(processing_path, '00_cropped_3p1D')
+path_01_rotated = os.path.join(processing_path, '01_abs_rotated_3p1D')
 
 if not os.path.exists(path_01_rotated):
     os.mkdir(path_01_rotated)
