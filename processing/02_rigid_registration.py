@@ -152,7 +152,7 @@ def register_sample(sample, apply_transform=None):
     transpath = os.path.join(scriptpath, 'transformation_vectors', sample)
     
     if not os.path.exists(transpath):
-        os.mkdirs(transpath)
+        os.mkdir(transpath)
     
     images = [im for im in data.keys() if im[3:7] == 'imag']
     images.sort()
