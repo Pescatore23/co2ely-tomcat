@@ -166,8 +166,10 @@ def register_sample(sample, apply_transform=True):
     mask[a:b,c:d,e:f] = 1 #
     
     if not apply_transform:
+	print('calculating tranformation')
         results = [register_images_general(image_name, im_fixed, data[image_name].data, parameterMap, transpath, im_mask=mask) for image_name in images]
     else:
+	print('applying transformation')
         results = [transform_images(image_name, data[image_name].data, parameterMap, transpath, im_mask=mask) for image_name in images]
     
     
@@ -202,7 +204,7 @@ for sample in samples:
     print(sample)
     print('rigid registration scans')
     data_reg = register_sample(sample)
-    datafile = ''.join(['02_',sample,'_abs_registered_3p1D_repeat.nc'])
+    datafile = ''.join(['02_',sample,'_registered_3p1D_repeat.nc'])
     datapath = os.path.join(outpath_02, datafile)
     print('save file to disk')
     data_reg.to_netcdf(datapath)
