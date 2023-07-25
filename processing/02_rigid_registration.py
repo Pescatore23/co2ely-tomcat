@@ -166,10 +166,10 @@ def register_sample(sample, apply_transform=True):
     mask[a:b,c:d,e:f] = 1 #
     
     if not apply_transform:
-	print('calculating tranformation')
+        print('calculating tranformation')
         results = [register_images_general(image_name, im_fixed, data[image_name].data, parameterMap, transpath, im_mask=mask) for image_name in images]
     else:
-	print('applying transformation')
+        print('applying transformation')
         results = [transform_images(image_name, data[image_name].data, parameterMap, transpath, im_mask=mask) for image_name in images]
     
     
