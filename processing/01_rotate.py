@@ -104,6 +104,10 @@ def rotate_scan(path, njobs=njobs):
     rot_params = json.load(open(rot_info_path, 'r'))
     filenames = filenames[:,rot_params['crop_after_rot'][-2]:rot_params['crop_after_rot'][-1]]
     
+    if sample == '4':
+        # hard.coded fix to match absorption and pahse reconstructed images
+        rot_params['crop_after_rot'] = [40, 841, 80, 768, 0, 2016]
+    
     # results = Parallel(n_jobs=njobs, temp_folder=temppath)(delayed(rotate_time_scan)(image_keys[i], data, rot_params) for i in range(len(image_keys)))
     results = Parallel(n_jobs=njobs, temp_folder=temppath)(delayed(rotate_time_scan)(key, data, rot_params) for key in image_keys)
     data.close()
