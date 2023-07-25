@@ -27,9 +27,9 @@ if host == 'mpc2959.psi.ch':
     temppath = '/mnt/SSD/fische_r/tmp/joblib_tmp'
     
 # path_01_4D = os.path.join(toppath, '01_rotated_3p1D')
-path_01_4D = os.path.join(toppathHDD, '01_rotated_3p1D')
+path_01_4D = os.path.join(toppathHDD, '01_abs_rotated_3p1D')
 registration_mask_path = os.path.join(gitpath, 'processing', 'masking_for_registration.json')  
-outpath_02  = os.path.join(toppath, '02_registered_3p1D')
+outpath_02  = os.path.join(toppath, '02_abs_registered_3p1D')
 if not os.path.exists(outpath_02):
 	os.mkdir(outpath_02)
       
@@ -142,7 +142,7 @@ def transform_images(image_name, im_tomove, transpath, verbose=False):
     return np.uint16(im_aligned)
 
 
-def register_sample(sample, apply_transform=None):
+def register_sample(sample, apply_transform=True):
     
     # open data
     file = '01_'+sample+'_rotated_3p1D.nc'
@@ -202,7 +202,7 @@ for sample in samples:
     print(sample)
     print('rigid registration scans')
     data_reg = register_sample(sample)
-    datafile = ''.join(['02_',sample,'_registered_3p1D_repeat.nc'])
+    datafile = ''.join(['02_',sample,'_abs_registered_3p1D_repeat.nc'])
     datapath = os.path.join(outpath_02, datafile)
     print('save file to disk')
     data_reg.to_netcdf(datapath)
