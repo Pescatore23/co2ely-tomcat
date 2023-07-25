@@ -64,7 +64,7 @@ os.chdir(cwd)
 # processing_path = os.path.join(toppath, 'processing')
 processing_path = toppath
 
-path_00_3p1D = os.path.join(processing_path, '00_cropped_3p1D')
+path_00_3p1D = os.path.join(processing_path, '00_abs_cropped_3p1D')
 path_01_rotated = os.path.join(processing_path, '01_abs_rotated_3p1D')
 
 if not os.path.exists(path_01_rotated):
