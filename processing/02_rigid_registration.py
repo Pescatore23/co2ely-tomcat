@@ -17,7 +17,7 @@ import numpy as np
 import subprocess
 
 samples = ['1', '3II', '3III', '4', '4II', '5II', '5', '6', '7x', '8x']
-samples = ['4']
+samples = ['3II']
 
 # paths
 if host == 'mpc2959.psi.ch':
@@ -26,10 +26,11 @@ if host == 'mpc2959.psi.ch':
     toppath = '/mnt/SSD/fische_r/COELY'
     temppath = '/mnt/SSD/fische_r/tmp/joblib_tmp'
     
-path_01_4D = os.path.join(toppath, '01_abs_rotated_3p1D')
-# path_01_4D = os.path.join(toppathHDD, '01_abs_rotated_3p1D')
+#path_01_4D = os.path.join(toppath, '01_abs_rotated_3p1D')
+path_01_4D = os.path.join(toppathHDD, '01_rotated_3p1D')
 registration_mask_path = os.path.join(gitpath, 'processing', 'masking_for_registration.json')  
-outpath_02  = os.path.join(toppath, '02_abs_registered_3p1D')
+#outpath_02  = os.path.join(toppath, '02_abs_registered_3p1D')
+outpath_02 = os.path.join(toppath, '02_registered_repeat_3p1D')
 if not os.path.exists(outpath_02):
 	os.mkdir(outpath_02)
       
@@ -142,7 +143,7 @@ def transform_images(image_name, im_tomove, transpath, verbose=False):
     return np.uint16(im_aligned)
 
 
-def register_sample(sample, apply_transform=True):
+def register_sample(sample, apply_transform=False):
     
     # open data
     file = '01_'+sample+'_rotated_3p1D.nc'
