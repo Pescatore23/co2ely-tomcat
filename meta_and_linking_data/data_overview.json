@@ -188,11 +188,6 @@
                 "4iib"
             ],
             "ec_lab_files": [
-                "cell_4ii_01_PEIS_C01.mgr",
-                "cell_4ii_01_PEIS_C01.mpr",
-                "cell_4ii_02_GEIS_C01.mgr",
-                "cell_4ii_02_GEIS_C01.mpr",
-                "cell_4ii_DUSB0_C01.sta",
                 "cell_4iib_01_PEIS_C01.mgr",
                 "cell_4iib_01_PEIS_C01.mpr",
                 "cell_4iib_02_GEIS_C01.mgr",
