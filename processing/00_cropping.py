@@ -153,7 +153,35 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdata):
     y_metric = y*px
     z_metric = z*px
     
-    data = xr.Dataset({'image_data': (['x','y','z','t_utc'], newStack),
+    # data = xr.Dataset({'image_data': (['x','y','z','t_utc'], newStack),
+    #                     'time': ('t_utc', time),
+    #                     'x_m': ('x', x_metric),
+    #                     'y_m': ('y', y_metric),
+    #                     'z_m': ('z', z_metric),
+    #                     'filenames': (['t_utc','z'], stepnames)
+    #                     },
+    #                   coords = {
+    #                       't_utc': timestamps,
+    #                       'x': x,
+    #                       'y': y,
+    #                       'z': z
+    #                       },
+    #                   attrs = {'name': sample_id,
+    #                            'foldername': sample,
+    #                            'scan_#': sample.split('_')[-1],
+    #                             'voxel size': '2.75 um',
+    #                             'voxel': px,
+    #                             'crop coordinates [a:b,c:d,e:f]': croplist,
+    #                             'cropping:' 
+    #                             # 'reference coordinates': locref, #TBD
+    #                             'git_sha': git_sha,
+    #                             'githash': githash
+    #                             }
+    #                   )
+
+# create dataset with one time step as data reference
+    data2 = xr.Dataset({'image_data_00': (['x','y','z'], newStack[...,0]),
+    #                     'image_data_1': (['x','y','z'], newStack[...,1]),
                         'time': ('t_utc', time),
                         'x_m': ('x', x_metric),
                         'y_m': ('y', y_metric),
@@ -176,39 +204,23 @@ def create_h5(sample, baseFolder, rawDataFolder, cropdata):
                                 # 'reference coordinates': locref, #TBD
                                 'git_sha': git_sha,
                                 'githash': githash
-                                }
+                                }                      
                       )
-
-# create dataset with one time step as data reference
-    data2 = xr.Dataset({'image_data_00': (['x','y','z'], newStack[...,0]),
-    #                     'image_data_1': (['x','y','z'], newStack[...,1]),
-                        'time': ('t_utc', time),
-                        'x_m': ('x', x_metric),
-                        'y_m': ('y', y_metric),
-                        'z_m': ('z', z_metric),
-                        'filenames': (['t_utc','z'], stepnames)
-                        },
-                      coords = {
-                          't_utc': timestamps,
-                          'x': x,
-                          'y': y,
-                          'z': z
-                          },
-                      )
-    data2.attrs = data.attrs
+    # data2.attrs = data.attrs
     # add the remaining datarrays for each timestep
     for i in range(1,newStack.shape[-1]):
         key = 'image_data_'+ f'{i:02d}'
         data2[key] = (['x','y','z'], newStack[...,i])
     
-    return data, data2
+    # return data, data2
+    return data2
 
 def run():
-    dest1 = os.path.join(destination, ''.join(['00_',sample,'_abs_cropped_4D.nc']))
+    # dest1 = os.path.join(destination, ''.join(['00_',sample,'_abs_cropped_4D.nc']))
     dest2 = os.path.join(destination, ''.join(['00_',sample,'_abs_cropped_3Dp1D.nc']))
     
-    data, data2 = create_h5(sample, baseFolder, rawDataFolder, cropdata)
-    data.to_netcdf(dest1)
+    data2 = create_h5(sample, baseFolder, rawDataFolder, cropdata)
+    # data.to_netcdf(dest1)
     data2.to_netcdf(dest2)
     
 if not sample is None:  
