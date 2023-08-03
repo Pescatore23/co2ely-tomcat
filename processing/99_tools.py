@@ -26,12 +26,12 @@ def convert_4D_nc_to_3plus1D(path, destination, datakey='image_data'):
     None.
 
     '''
-    data4D = xr.open_dataset(path)[datakey]
+    data4D = xr.load_dataset(path)
     x = data4D['x'].data
     y = data4D['y'].data
     z = data4D['z'].data
     
-    data3D = xr.Dataset({'image_data_00': (['x','y','z'], data4D[...,0].data),
+    data3D = xr.Dataset({'image_data_00': (['x','y','z'], data4D[datakey][...,0].data),
                         },
                       coords = {
                           'x': x,
@@ -39,9 +39,9 @@ def convert_4D_nc_to_3plus1D(path, destination, datakey='image_data'):
                           'z': z
                           },
                       )
-    for i in range(data4D.shape[-1]):
+    for i in range(data4D[datakey].shape[-1]):
         key = 'image_data_'+ f'{i:02d}'
-        data3D[key] = (['x','y','z'], data4D[...,i].data)
+        data3D[key] = (['x','y','z'], data4D[datakey][...,i].data)
         
     data3D.attrs = data4D.attrs
     data3D.to_netcdf(destination)
