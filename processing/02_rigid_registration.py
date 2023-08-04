@@ -26,11 +26,11 @@ if host == 'mpc2959.psi.ch':
     toppath = '/mnt/SSD/fische_r/COELY'
     temppath = '/mnt/SSD/fische_r/tmp/joblib_tmp'
     
-#path_01_4D = os.path.join(toppath, '01_abs_rotated_3p1D')
-path_01_4D = os.path.join(toppathHDD, '01_rotated_3p1D')
+path_01_4D = os.path.join(toppath, '01_abs_rotated_3p1D')
+#path_01_4D = os.path.join(toppathHDD, '01_rotated_3p1D')
 registration_mask_path = os.path.join(gitpath, 'processing', 'masking_for_registration.json')  
-#outpath_02  = os.path.join(toppath, '02_abs_registered_3p1D')
-outpath_02 = os.path.join(toppath, '02_registered_repeat_3p1D')
+outpath_02  = os.path.join(toppath, '02_abs_registered_3p1D')
+#outpath_02 = os.path.join(toppath, '02_registered_repeat_3p1D')
 if not os.path.exists(outpath_02):
 	os.mkdir(outpath_02)
       
@@ -204,7 +204,7 @@ def register_sample(sample, apply_transform=False):
 for sample in samples:
     print(sample)
     print('rigid registration scans')
-    data_reg = register_sample(sample)
+    data_reg = register_sample(sample, apply_transform=True)
     datafile = ''.join(['02_',sample,'_registered_3p1D_repeat.nc'])
     datapath = os.path.join(outpath_02, datafile)
     print('save file to disk')
