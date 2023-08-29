@@ -16,7 +16,7 @@ import cucim.skimage.filters
 from joblib import delayed, Parallel
 
 
-samples = ['3II', '3III', '4', '4II', '5II', '5', '6', '7x', '8x'] #'1'
+samples = [ '4', '4II', '5II', '5', '6', '7x', '8x'] #'1' , '3II', '3III'
 # paths
 if host == 'mpc2959.psi.ch':
     gitpath = '/mpc/homes/fische_r/lib/co2ely-tomcat'
@@ -53,9 +53,9 @@ def filter_subimage(im, gpu_id):
     return im
 
 def filter_image(im):
-    d = int(im.shape[2]/3)   
-    ims = [im[:,:,:d], im[:,:,d:2*d], im[:,:,2*d:]] 
-    imfilts = Parallel(n_jobs=3, temp_folder=temppath)(delayed(filter_subimage)(ims[i], i+1) for i in range(3))
+    d = int(im.shape[2]/4)   
+    ims = [im[:,:,:d], im[:,:,d:2*d], im[:,:,2*d:3*d], im[:,:,3*d:]] 
+    imfilts = Parallel(n_jobs=3, temp_folder=temppath)(delayed(filter_subimage)(ims[i], i+1) for i in range(4))
     im = np.concatenate(imfilts, axis=2)
     return im
     
