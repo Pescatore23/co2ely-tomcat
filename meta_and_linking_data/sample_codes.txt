@@ -1,0 +1,13 @@
+name in paper, name in data/sample code, operation condition
+1, 4, constant current 30 mA/cm2
+2, 5, constant current 25 mA/cm2 then increase until 200 mA/cm2 over  ~25 min
+3, 6, constant current 50 mA/cm2
+4, 7x, constant current 50 mA/cm2
+5, 3III, constant potential 3V
+6, 5II, constant potential 3.5V
+7, 3II, constant potential 3.5V
+8, 4II, current ramp 0-120 mA/cm2
+9, 8x, current ramp 0-200 mA/cm2
+10, 1, reference sample without electrochemical operation
+
+
