@@ -27,6 +27,8 @@ def find_free_GPU_memory(gpu_id, limit=GPUlimit, num_GPU=num_GPU):
         gpu_id = (gpu_id+1)%num_GPU #for all available GPUs
         sleep(2)
         free = cp.cuda.Device(gpu_id).mem_info[0]/cp.cuda.Device(gpu_id).mem_info[1]
+        if gpu_id == 0: #GPU 0 has more RAM, implicitly relax free memory requirement
+            free = free/2.5
         
     return gpu_id
 
@@ -60,7 +62,7 @@ def timestep_function(im, i):
 
 def label_slug(im, i):
     gpu_id = i%num_GPU
-    gpu_id = find_free_GPU_memory(gpu_id)
+    gpu_id = find_free_GPU_memory(gpu_id, limit =0.75)
     
     with cp.cuda.Device(gpu_id):
         imgpu = cp.array(im)
