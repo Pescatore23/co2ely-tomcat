@@ -90,11 +90,11 @@ def sample_function(sample):
     water = Stack == 2
     Stack[water] = 1 #temporarily remove the water from the image
     
-    results = Parallel(n_jobs=njobs, temp_folder = '/mnt/fische_r/tmp')(delayed(timestep_function)(water[...,i], i) for i in timesteps)
+    results = Parallel(n_jobs=njobs, temp_folder = '/mnt/SSD/fische_r/tmp')(delayed(timestep_function)(water[...,i], i) for i in timesteps)
     water = np.stack(results, axis=-1)
     Stack[water] = 2 #put water back into the image, spatial shift by median filters "eats" into other phases (1 px deep), at this point acceptable
     
-    results = Parallel(n_jobs=njobs, temp_folder = '/mnt/fische_r/tmp')(delayed(label_slug)(water[...,i], i) for i in timesteps)
+    results = Parallel(n_jobs=njobs, temp_folder = '/mnt/SSD/fische_r/tmp')(delayed(label_slug)(water[...,i], i) for i in timesteps)
     water = np.stack(results, axis=-1)
     Stack[water] = 4 #give the value 4 to the water considered to be slug
     
