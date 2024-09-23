@@ -92,5 +92,17 @@ def convert_3p1D_nc_to_4D(path, destination):
     data4d.attrs = data.attrs
     data.close()
     data4d.to_netcdf(destination)
+
+
+import cupy as cp
+from time import sleep
+def find_free_GPU_memory(gpu_id, limit=0.5, num_GPU=5):
+    free = cp.cuda.Device(gpu_id).mem_info[0]/cp.cuda.Device(gpu_id).mem_info[1]
     
+    while free<limit:
+        gpu_id = (gpu_id+1)%num_GPU #for all available GPUs
+        sleep(2)
+        free = cp.cuda.Device(gpu_id).mem_info[0]/cp.cuda.Device(gpu_id).mem_info[1]
+        
+    return gpu_id
     
