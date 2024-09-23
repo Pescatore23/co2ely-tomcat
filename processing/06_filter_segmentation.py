@@ -67,7 +67,7 @@ def label_slug(im, i):
         imgpu = GPUndimage.label(imgpu)
         slug_labels, counts = cp.unique(imgpu[0][:,:150,:], return_counts=True) #150 as height criterion for slug
         rel_labels = slug_labels[counts>20][1:] #only consider larger labels to speed up calculation
-        slug_water = cp.zeros(imgpu.shape, dtype=bool)
+        slug_water = cp.zeros(imgpu[0].shape, dtype=bool)
         for j in rel_labels:
             slug_water[imgpu[0]==j] = True
         im = cp.asnumpy(slug_water)
