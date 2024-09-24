@@ -82,7 +82,7 @@ def label_slug(im, i):
     im = ndimage.label(im)
     slug_labels, counts = np.unique(im[0][:,:150,:], return_counts=True) #150 as height criterion for slug
     rel_labels = slug_labels[counts>20][1:] #only consider larger labels to speed up calculation
-    slug_water = cp.zeros(im[0].shape, dtype=bool)
+    slug_water = np.zeros(im[0].shape, dtype=bool)
     for j in rel_labels:
         slug_water[im[0]==j] = True
     return slug_water
