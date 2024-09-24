@@ -14,6 +14,7 @@ from cucim.skimage.morphology import ball as GPUball
 from time import sleep
 from joblib import delayed, Parallel
 import subprocess
+from scipy import ndimage
 
 num_GPU=5
 GPUlimit = 0.5
@@ -61,22 +62,30 @@ def timestep_function(im, i):
     return im
 
 def label_slug(im, i):
-    gpu_id = i%num_GPU
-    gpu_id = find_free_GPU_memory(gpu_id, limit =0.75)
+    # gpu_id = i%num_GPU
+    # gpu_id = find_free_GPU_memory(gpu_id, limit =0.75)
     
-    with cp.cuda.Device(gpu_id):
-        imgpu = cp.array(im)
-        imgpu = GPUndimage.label(imgpu)
-        slug_labels, counts = cp.unique(imgpu[0][:,:150,:], return_counts=True) #150 as height criterion for slug
-        rel_labels = slug_labels[counts>20][1:] #only consider larger labels to speed up calculation
-        slug_water = cp.zeros(imgpu[0].shape, dtype=bool)
-        for j in rel_labels:
-            slug_water[imgpu[0]==j] = True
-        im = cp.asnumpy(slug_water)
-        del imgpu, slug_water
-        mempool = cp.get_default_memory_pool()
-        mempool.free_all_blocks()
-    return im
+    # with cp.cuda.Device(gpu_id):
+    #     imgpu = cp.array(im)
+    #     imgpu = GPUndimage.label(imgpu)
+    #     slug_labels, counts = cp.unique(imgpu[0][:,:150,:], return_counts=True) #150 as height criterion for slug
+    #     rel_labels = slug_labels[counts>20][1:] #only consider larger labels to speed up calculation
+    #     slug_water = cp.zeros(imgpu[0].shape, dtype=bool)
+    #     for j in rel_labels:
+    #         slug_water[imgpu[0]==j] = True
+    #     im = cp.asnumpy(slug_water)
+    #     del imgpu, slug_water
+    #     mempool = cp.get_default_memory_pool()
+    #     mempool.free_all_blocks()
+    
+    # do not use the GPU due to RAM limitations
+    im = ndimage.label(im)
+    slug_labels, counts = np.unique(im[0][:,:150,:], return_counts=True) #150 as height criterion for slug
+    rel_labels = slug_labels[counts>20][1:] #only consider larger labels to speed up calculation
+    slug_water = cp.zeros(im[0].shape, dtype=bool)
+    for j in rel_labels:
+        slug_water[im[0]==j] = True
+    return slug_water
     
     
 
