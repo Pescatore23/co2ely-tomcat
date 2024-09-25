@@ -37,6 +37,7 @@ toppath = '/mnt/SSD/fische_r/COELY/05_water_GDL_ML'
 gitpath = '/mpc/homes/fische_r/lib/co2ely-tomcat'
 
 samples = ['1', '3II', '3III', '4', '4II', '5', '5II', '6', '7x', '8x']
+samples = ['8x']
 
 # git hash
 scriptpath = os.path.dirname(__file__)
